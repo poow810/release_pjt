@@ -1,0 +1,343 @@
+{
+    "data": [
+        {
+            "movie_id": 823464,
+            "title": "고질라 X 콩: 뉴 엠파이어",
+            "release_date": "2024-03-27",
+            "popularity": 6633.896,
+            "vote_avg": 7.1,
+            "overview": "고질라 X 콩, 이번에는 한 팀이다! ‘고질라’ VS ‘콩’, 두 타이탄의 전설적인 대결 이후 할로우 어스에 남은 ‘콩’은 드디어 애타게 찾던 동족을 발견하지만 그 뒤에 도사리고 있는 예상치 못한 위협에 맞닥뜨린다. 한편, 깊은 동면에 빠진 ‘고질라’는 알 수 없는 신호로 인해 깨어나고 푸른 눈의 폭군 ‘스카 킹’의 지배 아래 위기에 처한 할로우 어스를 마주하게 된다. 할로우 어스는 물론, 지구상에도 출몰해 전세계를 초토화시키는 타이탄들의 도발 속에서 ‘고질라’와 ‘콩’은 사상 처음으로 한 팀을 이뤄 반격에 나서기로 하는데…",
+            "poster_path": "/4z1VMmlxHrziG45901esjB4dpIa.jpg",
+            "genres": [
+                878,
+                28,
+                12
+            ],
+            "directors": [
+                {
+                    "name_en": "애덤 윈가드",
+                    "name_kr": "에덤 윈가드 (Adam Wingard)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "레베카 홀",
+                    "name_kr": "Rebecca Hall\n\n리베카 홀 (Rebecca Hall)"
+                },
+                {
+                    "name_en": "브라이언 타이리 헨리",
+                    "name_kr": "브라이언 타이리 헨리 (Brian Tyler Henry) - Beuraian Taili Henri"
+                },
+                {
+                    "name_en": "댄 스티븐스",
+                    "name_kr": "댄 스티븐스 (Dan Stevens)"
+                },
+                {
+                    "name_en": "Kaylee Hottle",
+                    "name_kr": "케일리 호틀 (Keillei Hotel)"
+                },
+                {
+                    "name_en": "Alex Ferns",
+                    "name_kr": "알렉스 펀스 (Alex Ferns)"
+                }
+            ]
+        },
+        {
+            "movie_id": 653346,
+            "title": "혹성탈출: 새로운 시대",
+            "release_date": "2024-05-08",
+            "popularity": 1939.392,
+            "vote_avg": 7.176,
+            "overview": "진화한 유인원과 퇴화된 인간들이 살아가는 땅. 유인원 리더 프록시무스는 완전한 군림을 위해 인간들을 사냥하며 자신의 제국을 건설한다. 한편, 또 다른 유인원 노아는 우연히 숨겨진 과거의 이야기와 시저의 가르침을 듣게 되고 인간과 유인원이 함께 할 새로운 세상을 꿈꾼다. 어느 날 그의 앞에 나타난 의문의 한 인간 소녀. 노아는 그녀와 함께 자유를 향한 여정을 시작하게 되는데…",
+            "poster_path": "/plNOSbqkSuGEK2i15A5btAXtB7t.jpg",
+            "genres": [
+                878,
+                12,
+                28
+            ],
+            "directors": [
+                {
+                    "name_en": "웨스 볼",
+                    "name_kr": "웨스 볼 (Wes Ball) - 웨스 볼 (Wes Ball)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "오웬 티그",
+                    "name_kr": "오웬 티그 (Owen Tigue)"
+                },
+                {
+                    "name_en": "프레이아 앨런",
+                    "name_kr": "프레이아 앨런 (Peureia Aellun)"
+                },
+                {
+                    "name_en": "케빈 듀랜드",
+                    "name_kr": "케빈 듀랜드\n\n(Kevin Durand)"
+                },
+                {
+                    "name_en": "피터 메이컨",
+                    "name_kr": "피터 메이컨 (Peter Macon)"
+                },
+                {
+                    "name_en": "윌리엄 H. 메이시",
+                    "name_kr": "윌리엄 H. 메이시 (William H. Macy) - 윌리엄 에이치 메이시 (Willyam H. Meisi)"
+                }
+            ]
+        },
+        {
+            "movie_id": 940721,
+            "title": "고질라: 마이너스 원",
+            "release_date": "2023-11-03",
+            "popularity": 1546.75,
+            "vote_avg": 7.656,
+            "overview": "고질라 탄생 70주년 기념 작품. 시리즈 사상 최악의 절망이 일본을 습격한다!  전후, 제로가 된 일본을 뒤쫓듯 나타난 고질라가 이 나라를 마이너스로 떨어뜨린다.  사상 최고로 절망적인 상황 속에서의 습격에 누가? 그리고 어떻게?  일본은 맞서게 되는 것인가...",
+            "poster_path": "/buvBq2zLP7CcJth8tjrI4znvfEO.jpg",
+            "genres": [
+                878,
+                27,
+                28
+            ],
+            "directors": [
+                {
+                    "name_en": "야마자키 다카시",
+                    "name_kr": "山崎 高史 (야마자키 다카시) - Yamazaki Takashi"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "카미키 류노스케",
+                    "name_kr": "Korean text: '카미키 류노스케' (Kamiki Ryunosuke)"
+                },
+                {
+                    "name_en": "하마베 미나미",
+                    "name_kr": "하마베 미나미 (Hamabe Minami)"
+                },
+                {
+                    "name_en": "야마다 유키",
+                    "name_kr": "Yamada Yuki (야마다 유키)"
+                },
+                {
+                    "name_en": "아오키 무네타카",
+                    "name_kr": "아오키 무네타카 (Aoki Munetaka)"
+                },
+                {
+                    "name_en": "요시오카 히데타카",
+                    "name_kr": "요시오카 히데타카 (Yoshio-ka Hide-taka)"
+                }
+            ]
+        },
+        {
+            "movie_id": 1219685,
+            "title": "Un père idéal",
+            "release_date": "2024-04-21",
+            "popularity": 1300.038,
+            "vote_avg": 6.318,
+            "overview": "",
+            "poster_path": "/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg",
+            "genres": [
+                18,
+                10770
+            ],
+            "directors": [
+                {
+                    "name_en": "Hélène Fillières",
+                    "name_kr": "엘렌 피리에 (Hélène Fillières)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "Laurent Gerra",
+                    "name_kr": "로랑 게라 (Laurent Gerra)"
+                },
+                {
+                    "name_en": "Eddy Mitchell",
+                    "name_kr": "에디 미쉘 (Eddy Mitchell)"
+                },
+                {
+                    "name_en": "Laure-Lucille Simon",
+                    "name_kr": "로레-루실 시몽 (Laure-Lucille Simon)"
+                },
+                {
+                    "name_en": "Jérôme Kircher",
+                    "name_kr": "제롬 키르셰 (Jé·rom Kirche)"
+                },
+                {
+                    "name_en": "Tess Barthélémy",
+                    "name_kr": "테스 바르텔미 (Tess Barthélémy) - 테스 바르텔미"
+                }
+            ]
+        },
+        {
+            "movie_id": 693134,
+            "title": "듄: 파트 2",
+            "release_date": "2024-02-27",
+            "popularity": 1104.453,
+            "vote_avg": 8.197,
+            "overview": "황제의 모략으로 멸문한 가문의 유일한 후계자 폴. 어머니 레이디 제시카와 간신히 목숨만 부지한 채 사막으로 도망친다. 그곳에서 만난 반란군들과 숨어 지내다 그들과 함께 황제의 모든 것을 파괴할 전투를 준비한다. 한편 반란군들의 기세가 높아질수록 불안해진 황제와 귀족 가문은 잔혹한 암살자 페이드 로타를 보내 반란군을 몰살하려 하는데…",
+            "poster_path": "/8uUU2pxm6IYZw8UgnKJyx7Dqwu9.jpg",
+            "genres": [
+                878,
+                12
+            ],
+            "directors": [
+                {
+                    "name_en": "드니 빌뇌브",
+                    "name_kr": "드니 빌뇌브 (Deni Billeubeu)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "티모시 샬라메",
+                    "name_kr": "티모시 샬라메 (Timothée Chalamet) - Pronunciation: Timo-si Syal-la-me"
+                },
+                {
+                    "name_en": "젠데이아",
+                    "name_kr": "제인데이어 (Jen-dei-eo)"
+                },
+                {
+                    "name_en": "레베카 페르구손",
+                    "name_kr": "'Rebecca Ferguson' - 레베카 퍼거슨 (re-be-ka peu-geo-seun)"
+                },
+                {
+                    "name_en": "하비에르 바르뎀",
+                    "name_kr": "하비에르 바르뎀\n(Javier Bardem)"
+                },
+                {
+                    "name_en": "조시 브롤린",
+                    "name_kr": "Josh Brolin\n조시 브롤린 (Josh Brolin)"
+                }
+            ]
+        },
+        {
+            "movie_id": 967847,
+            "title": "고스트버스터즈: 오싹한 뉴욕",
+            "release_date": "2024-03-20",
+            "popularity": 958.225,
+            "vote_avg": 6.746,
+            "overview": "무더운 여름의 뉴욕의 어느 날, 고대 유물 속 깨어난 데스칠로 인해 정체불명의 냉기가 몰려오고 마침내 도시는 얼어붙고 만다. 유령을 퇴치하는 그루버슨과 라이즈 버스터즈 멤버들은 얼어붙은 세상을 깨부수기 위해 유령 군단을 쫓기 시작하는데…",
+            "poster_path": "/mGzSIfzmcf9H91DS06cnka1SYrP.jpg",
+            "genres": [
+                14,
+                12,
+                35
+            ],
+            "directors": [
+                {
+                    "name_en": "Gil Kenan",
+                    "name_kr": "길 케난 (Gir Kenan)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "맥케나 그레이스",
+                    "name_kr": "맥케나 그레이스 (McKenna Grace) - 메케나 그레이스 (Mekena Geureiseu)"
+                },
+                {
+                    "name_en": "폴 러드",
+                    "name_kr": "폴 러드 (Paul Rudd) - 폴 러드"
+                },
+                {
+                    "name_en": "캐리 쿤",
+                    "name_kr": "캐리 쿤 (Kaeri Koon)"
+                },
+                {
+                    "name_en": "핀 울프하드",
+                    "name_kr": "핀 울프하드 - Pin Wooleuhadeu"
+                },
+                {
+                    "name_en": "댄 애크로이드",
+                    "name_kr": "댄 애크로이드 (Dan Aikeuroideu)"
+                }
+            ]
+        },
+        {
+            "movie_id": 1011985,
+            "title": "쿵푸팬더 4",
+            "release_date": "2024-03-02",
+            "popularity": 895.937,
+            "vote_avg": 7.127,
+            "overview": "마침내 내면의 평화… 냉면의 평화…가 찾아왔다고 믿는 용의 전사 ‘포’ 이젠 평화의 계곡의 영적 지도자가 되고, 자신을 대신할 후계자를 찾아야만 한다. “이제 용의 전사는 그만둬야 해요?” 용의 전사로의 모습이 익숙해지고 새로운 성장을 하기보다 지금 이대로가 좋은 ‘포’ 하지만 모든 쿵푸 마스터들의 능력을 그대로 복제하는 강력한 빌런 ‘카멜레온’이 나타나고 그녀를 막기 위해 정체를 알 수 없는 쿵푸 고수 ‘젠’과 함께 모험을 떠나게 되는데… 포는 가장 강력한 빌런과 자기 자신마저 뛰어넘고 진정한 변화를 할 수 있을까?",
+            "poster_path": "/1ZNOOMmILNUzVYbzG1j7GYb5bEV.jpg",
+            "genres": [
+                16,
+                28,
+                10751,
+                35,
+                14
+            ],
+            "directors": [
+                {
+                    "name_en": "Mike Mitchell",
+                    "name_kr": "마이크 미첼 (Mike Mitchell)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "잭 블랙",
+                    "name_kr": "잭 블랙 (Jack Black) - Jaekeu Beullaek"
+                },
+                {
+                    "name_en": "아콰피나",
+                    "name_kr": "아콰피나 (Akwafina)"
+                },
+                {
+                    "name_en": "비올라 데이비스",
+                    "name_kr": "'비올라 데이비스' - Bi-olla Dei-bi-seu"
+                },
+                {
+                    "name_en": "더스틴 호프만",
+                    "name_kr": "더스틴 호프만 (Dustin Hoffman) - 더스틴 호프만 (Deoseutin Hopeuman)"
+                },
+                {
+                    "name_en": "브라이언 크랜스턴",
+                    "name_kr": "브라이언 크랜스턴\n\nPronunciation: Beu-rai-an Keu-raen-seu-ton"
+                }
+            ]
+        },
+        {
+            "movie_id": 1111873,
+            "title": "애비게일",
+            "release_date": "2024-04-18",
+            "popularity": 821.264,
+            "vote_avg": 6.945,
+            "overview": "오직 돈을 위해서 업계 최고들로만 모인 납치범들. 정체를 알 수 없는 거부의 딸이자 평범한 소녀 ‘애비게일’을 납치하고, 24시간 동안 저택에서 그녀를 감시하고 거액의 돈을 받기로 한다. 하지만 평범한 소녀 ‘애비게일’은 발레리나 뱀파이어였고 오히려 납치범들은 역으로 저택에 갇혀 그녀의 장난감과 먹이가 되었다. 납치범들은 이제 24시간 안에 살기 위해 저택을 탈출해야 한다.",
+            "poster_path": "/dRCVYbOjhMNghBQgHuqthG5iLH.jpg",
+            "genres": [
+                27,
+                53
+            ],
+            "directors": [
+                {
+                    "name_en": "Matt Bettinelli-Olpin",
+                    "name_kr": "맷 베티넬리-올핀 (maet betinelli-olpin)"
+                },
+                {
+                    "name_en": "Tyler Gillett",
+                    "name_kr": "타이러 길렛 (Tyler Gillett)"
+                }
+            ],
+            "actors": [
+                {
+                    "name_en": "멜리사 바레라",
+                    "name_kr": "메리사 바레라 (Melissa Varela)"
+                },
+                {
+                    "name_en": "댄 스티븐스",
+                    "name_kr": "댄 스티븐스 (Dan Stevens)"
+                },
+                {
+                    "name_en": "알리샤 위어",
+                    "name_kr": "알리샤 위어 - Alisha Wie어 (아리샤 위에)"
+                },
+                {
+                    "name_en": "캐스린 뉴턴",
+                    "name_kr": "Katharine Newton (캐서린 뉴튼)"
+                },
+                {
+                    "name_en": "케빈 듀랜드",
+                    "name_kr": "케빈 듀랜드 (Kevin Durand)"
+                }
+            ]
+        }
+    ]
+}

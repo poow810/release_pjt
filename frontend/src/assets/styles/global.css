@@ -1,0 +1,7 @@
+body {
+  font-family: 'GmarketSans';
+}
+
+.input-group-text {
+  cursor: pointer; /* 마우스 커서를 포인터 모양으로 변경 */
+}
