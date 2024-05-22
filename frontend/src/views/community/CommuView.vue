@@ -22,7 +22,7 @@
           <td>{{ categoryNames[article.category] || '알 수 없음' }}</td>
           <td>{{ article.title }}</td>
           <td>{{ article.content }} ({{ article.comments_count }})</td>
-          <td>{{ article.user.username }}</td>
+          <td @click.stop="goProfile(article.user.id)">{{ article.user.username }}</td>
           <td>{{ article.likes_count }}</td>
           <td>{{ article.click_count }}</td>
         </tr>
@@ -49,7 +49,7 @@
           <td>{{ categoryNames[article.category] || '알 수 없음' }}</td>
           <td>{{ article.title }}</td>
           <td>{{ article.content }} ({{ article.comments_count }})</td>
-          <td>{{ article.user.username }}</td>
+          <td @click.stop="goProfile(article.user.id)">{{ article.user.username }}</td>
           <td>{{ article.likes_count}}</td>
           <td>{{ article.click_count }}</td>
         </tr>
@@ -106,6 +106,10 @@ onMounted(async () => {
     category.value = 'No Category';
   }
 });
+
+const goProfile = (user_id) => {
+  router.push({name: 'profile', params: { id: user_id}})
+}
 
 const goToDetail = (id) => {
   router.push({ name: 'articleDetail', params: { id } });

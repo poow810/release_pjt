@@ -3,7 +3,7 @@
     <h4>댓글</h4>
     <!-- 댓글 카드 -->
     <div class="comment-card p-3 my-2 border rounded" v-for="comment in articleStore.comments" :key="comment.id">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center" @click="goProfile(comment.user.id)">
         <img class="rounded-circle m-2" :src="images[comment.user.user_image]"  alt="User Image" style="width: 50px; height: 50px;">
         <strong>{{ comment.user.nickname }}</strong>
       </div>
@@ -33,6 +33,7 @@ import image2 from '@/assets/static/kitty.png'
 import image3 from '@/assets/static/kuromi.png'
 import image4 from '@/assets/static/mymelody.png'
 import image5 from '@/assets/static/pompompurin.png'
+import { useRouter } from 'vue-router'
 
 const images = [noimage, image1, image2, image3, image4, image5]
 
@@ -40,9 +41,14 @@ const { articleId } = defineProps({
   articleId: Number,
 })
 
+const router = useRouter()
 const articleStore = useArticleStore()
 const comment = ref('')
 const loading = ref(true) // 로딩 상태 추가
+
+const goProfile = (user_id) => {
+  router.push({name: 'profile', params: {id: user_id}})
+}
 
 const createComment = async () => {
   if (comment.value.trim()) { 

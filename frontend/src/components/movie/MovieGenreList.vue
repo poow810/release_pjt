@@ -27,9 +27,11 @@
     <!-- Swiper -->
     <swiper :slides-per-view="5" :space-between="5" class="mySwiper d-flex">
       <swiper-slide v-for="movie in movies" :key="movie.id" class="text-center">
-        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="rounded-2"/>
-        <p class="fs-5">{{ movie.title }}</p>
-        <p class="fs-6">평점: {{ movie.vote_average.toFixed(1) }}</p>
+        <div @click="goDetail(movie.id)">
+          <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="rounded-2"/>
+          <p class="fs-5">{{ movie.title }}</p>
+          <p class="fs-6">평점: {{ movie.vote_average.toFixed(1) }}</p>
+        </div>
       </swiper-slide>
     </swiper>
   </div>
@@ -40,9 +42,15 @@ import { onMounted, ref } from 'vue';
 import { useMovieStore } from '@/stores/movieStore';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useMovieStore();
 const movies = ref([]);
+
+const goDetail = (movie_id) => {
+  router.push({name: 'movieDetail', params: {id: movie_id}})
+}
 
 onMounted(async () => {
   await store.getGenreList(); // 장르 목록 먼저 가져오기
@@ -78,12 +86,13 @@ async function getPopularMoviesByGenre(genreId) {
 
 <style scoped>
 .mySwiper .swiper-slide {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .mySwiper img {
-  width: 200px; /* 이미지의 너비를 150px로 설정 */
+  width: 100%; /* 이미지의 너비를 150px로 설정 */
   height: auto; /* 높이를 자동으로 맞춤 */
   object-fit: cover; /* 이미지가 비율을 유지하면서 컨테이너에 꽉 차도록 합니다. */
 }

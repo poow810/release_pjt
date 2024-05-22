@@ -23,8 +23,9 @@ export const useMovieStore = defineStore('movieStore', () => {
   const movieReview = ref([])
 
   const detailMovies = ref({})
-
   const detailReviews = ref(null)
+
+  const searchMovies = ref(null)
 
   // 평점 높은순
   const getRatedMovies = async () => {
@@ -203,7 +204,9 @@ export const useMovieStore = defineStore('movieStore', () => {
           text: text,
         }
       })
+      searchMovies.value = response.data
       console.log(response.data)
+      router.push({name: 'movieSearch'})
     }
     catch (err) {
       console.log('영화 검색 데이터 가져오기 실패:', err);
@@ -225,6 +228,6 @@ export const useMovieStore = defineStore('movieStore', () => {
   }
 
   return { API_KEY, token, SERVER_URL, LOCAL_URL, nowPlayingMovies, ratedMovies, genreMovies, movieLike,
-    isLiked, likeCount, movieReview, detailMovies, detailReviews, movieDetail, getReview, createReview, getRatedMovies, getNowPlayingMovies, getGenreList,
+    isLiked, likeCount, movieReview, detailMovies, detailReviews, searchMovies, movieDetail, getReview, createReview, getRatedMovies, getNowPlayingMovies, getGenreList,
     getPopularMoviesByGenre, searchMovie, getDetailReview }
 }, {persist: true})

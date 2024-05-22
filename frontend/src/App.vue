@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useMovieStore } from '@/stores/movieStore';
 const userStore = useUserStore()

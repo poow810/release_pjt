@@ -7,7 +7,7 @@
             <div class="modal-content">
               <h3>이미지 선택</h3>
               <div class="image-list d-flex flex-wrap">
-                <img v-for="(image, index) in images" :key="index" :src="image" @click="selectImage(index)" alt="Option" class="img-thumbnail m-2" style="cursor: pointer; max-width: 100px;">
+                <img v-for="(image, index) in images" :key="index" :src="image" @click="selectImage(index, user_id)" alt="Option" class="img-thumbnail m-2" style="cursor: pointer; max-width: 100px;">
               </div>
             </div>
           </div>
@@ -99,10 +99,15 @@
   const selectedImage = ref(images[0])
   const showModal = ref(false)
   
-  function selectImage(index) {
-      selectedImage.value = images[index]
+  function selectImage(index, user_id) {
+    if (userId == user_id) {
+        selectedImage.value = images[index]
+        showModal.value = false
+        updateUserImage(index)
+    } else {
+      alert("자신의 프로필 이미지만 변경할 수 있습니다.")
       showModal.value = false
-      updateUserImage(index)
+    }
   }
   
   function updateUserImage(imageIndex) {

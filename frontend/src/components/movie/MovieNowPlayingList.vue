@@ -4,9 +4,11 @@
     <!-- Swiper -->
     <swiper :slides-per-view="5" :space-between="5" class="mySwiper">
       <swiper-slide v-for="movie in movies" :key="movie.id">
-        <img :src="`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`" class="rounded-2" />
-        <p class="fs-5">{{ movie.title }}</p>
-        <p class="fs-6">평점: {{ movie.vote_average.toFixed(1) }}</p>
+        <div @click="goDetail(movie.id)">
+          <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="rounded-2" />
+          <p class="fs-5">{{ movie.title }}</p>
+          <p class="fs-6">평점: {{ movie.vote_average.toFixed(1) }}</p>
+        </div>
         <!-- <p>줄거리: {{ movie.overview }}</p> -->
       </swiper-slide>
     </swiper>
@@ -18,9 +20,16 @@ import { onMounted } from 'vue';
 import { useMovieStore } from '@/stores/movieStore'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+import { useRouter } from 'vue-router'
 
 const store = useMovieStore()
-const movies = store.nowPlayingMovies 
+const movies = store.nowPlayingMovies
+const router = useRouter() 
+
+const goDetail = (movie_id) => {
+  router.push({name: 'movieDetail', params: {id: movie_id}})
+}
+
 onMounted(() => {
   store.getNowPlayingMovies()
 })

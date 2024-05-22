@@ -14,6 +14,7 @@ import MovieView from '@/views/movie/MovieView.vue'
 import Review from '@/views/review/Review.vue'
 import WeatherRecommendView from '@/views/recommend/WeatherRecommendView.vue'
 import ReviewDetail from '@/views/review/ReviewDetail.vue'
+import MovieSearchView from '@/views/movie/MovieSearchView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -92,6 +93,11 @@ const router = createRouter({
       path: '/movies/:id',
       name: 'movieDetail',
       component: MovieView
+    },
+    {
+      path: '/movies/search',
+      name: 'movieSearch',
+      component: MovieSearchView
     },
     
     // Review
