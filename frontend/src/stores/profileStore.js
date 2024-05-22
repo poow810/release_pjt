@@ -8,7 +8,7 @@ export const useProfileStore = defineStore('profileStore', () => {
     const store = useUserStore()
     const router = useRouter()
     const SERVER_URL = 'http://43.202.204.222'
-    const LOCAL_URL = 'http://192.168.214.72:8000'
+    const LOCAL_URL = 'http://172.30.1.32:8000'
     const followers_count = ref(null)
     const followings_count = ref(null)
     const isFollowing = ref(null)

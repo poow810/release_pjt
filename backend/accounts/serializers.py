@@ -77,7 +77,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     
     def get_review(self, obj):
         review = Review.objects.filter(user=obj)
-        return UserReviewSerializer(review, many=True).data
+        return UserReviewSerializer(review, many=True, context=self.context).data
 
 
 class CustomRegisterSerializer(RegisterSerializer):

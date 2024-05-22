@@ -7,7 +7,7 @@ export const useUserStore = defineStore('userStore', () => {
   const token = ref(null)
   const router = useRouter()
   const SERVER_URL = 'http://43.202.204.222'
-  const LOCAL_URL = 'http://192.168.214.72:8000'
+  const LOCAL_URL = 'http://172.30.1.32:8000'
   const userId = ref(null)
 
   // 로그인 확인

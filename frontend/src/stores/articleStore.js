@@ -9,7 +9,7 @@ export const useArticleStore = defineStore('articleStore', () => {
   const router = useRouter()
   const articles = ref([])
   const SERVER_URL = 'http://43.202.204.222'
-  const LOCAL_URL = 'http://192.168.214.72:8000'
+  const LOCAL_URL = 'http://172.30.1.32:8000'
   const isLiked = ref(false)
   const likeCount = ref(0)
   const comments = ref([])

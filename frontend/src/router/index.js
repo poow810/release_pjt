@@ -13,6 +13,7 @@ import ProfileView from '@/views/profile/ProfileView.vue'
 import MovieView from '@/views/movie/MovieView.vue'
 import Review from '@/views/review/Review.vue'
 import WeatherRecommendView from '@/views/recommend/WeatherRecommendView.vue'
+import ReviewDetail from '@/views/review/ReviewDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -98,6 +99,11 @@ const router = createRouter({
       path: '/reviews/:id',
       name: 'review',
       component: Review
+    },
+    {
+      path: '/reviews/detail/:review_id',
+      name:'reviewDetail',
+      component: ReviewDetail
     }
   ]
 })

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>영화 상세 페이지</h3>
     <MovieDetails 
     :movieId="movieId"
     />

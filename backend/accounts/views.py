@@ -23,7 +23,7 @@ def findId(request, email):
 def profile(request, user_id):
     if request.method == 'GET':
         person = get_object_or_404(User, pk=user_id)
-        serializer = UserDetailsSerializer(person)
+        serializer = UserDetailsSerializer(person, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         person = get_object_or_404(User, pk=user_id)
