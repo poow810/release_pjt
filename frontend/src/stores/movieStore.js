@@ -9,7 +9,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   const token =  store.token
   const router = useRouter()
   const LOCAL_URL = 'http://172.30.1.32:8000'
-  const SERVER_URL = 'http://43.202.204.222'
+  const SERVER_URL = 'http://192.168.0.13:8000'
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 

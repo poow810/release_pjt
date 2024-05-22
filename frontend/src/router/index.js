@@ -15,6 +15,7 @@ import Review from '@/views/review/Review.vue'
 import WeatherRecommendView from '@/views/recommend/WeatherRecommendView.vue'
 import ReviewDetail from '@/views/review/ReviewDetail.vue'
 import MovieSearchView from '@/views/movie/MovieSearchView.vue'
+import CommuArticleUpdateView from '@/views/community/CommuArticleUpdateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/community/create',
       name: 'create',
       component: CommuArticleCreateView
+    },
+    {
+      path: '/community/update/:id',
+      name: 'update',
+      component: CommuArticleUpdateView
     },
     {
       path: '/community/:id',

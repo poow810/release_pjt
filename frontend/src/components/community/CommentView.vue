@@ -14,8 +14,14 @@
       <!-- 댓글 작성 시간 -->
       <div class="text-muted m-2">
         <p class="text-secondary">{{ formatDate(comment.created_at) }}</p>
+        <div>
+          <div v-show="userStore.userId == comment.user.id">
+          <button @click="updateComment(articleId, comment.id)">수정</button>
+          <button @click="deleteComment(articleId, comment.id)">삭제</button>
+        </div>
       </div>
     </div>
+  </div>
     <!-- 댓글 입력 폼 -->
     <form @submit.prevent="createComment">
       <input type="text" v-model="comment" placeholder="댓글을 남겨보세요" class="form-control my-2">
@@ -34,9 +40,11 @@ import image3 from '@/assets/static/kuromi.png'
 import image4 from '@/assets/static/mymelody.png'
 import image5 from '@/assets/static/pompompurin.png'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 const images = [noimage, image1, image2, image3, image4, image5]
 
+const userStore = useUserStore()
 const { articleId } = defineProps({
   articleId: Number,
 })
@@ -45,6 +53,21 @@ const router = useRouter()
 const articleStore = useArticleStore()
 const comment = ref('')
 const loading = ref(true) // 로딩 상태 추가
+
+
+const updateComment = async (articleId, commentId) => {
+  const newContent = prompt("댓글을 수정하세요");
+
+  if (newContent && newContent.trim() !== "") {
+    await articleStore.updateComment(articleId, commentId, newContent.trim());
+  } else {
+    alert("댓글 내용을 입력해주세요.");
+  }
+};
+
+const deleteComment = (articleId, comment_id) => {
+  articleStore.deleteComment(articleId, comment_id)
+}
 
 const goProfile = (user_id) => {
   router.push({name: 'profile', params: {id: user_id}})

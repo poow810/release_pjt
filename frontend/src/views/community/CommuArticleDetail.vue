@@ -2,6 +2,13 @@
   <div class="container mt-5">
     <div v-if="articleStore.detailPosts" class="card p-3">
       <h1 class="card-title mt-4">{{ articleStore.detailPosts.title }}</h1>
+      <div>
+        <p>{{ articleStore.detailNickName }}</p>
+        <div v-show="userStore.userId == articleStore.detailUserId">
+          <button @click="updatePost(articleStore.detailPosts.id)">수정</button>
+          <button @click="deletePost(articleStore.detailPosts.id)">삭제</button>
+        </div>
+      </div>
       <hr>
       <p class="card-text">조회수: {{ articleStore.detailPosts.click_count }}</p>
       <div class="card-body">
@@ -28,8 +35,8 @@
 
 <script setup>
 import axios from 'axios';
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useArticleStore } from '@/stores/articleStore'
 import CommentView from '@/components/community/CommentView.vue';
@@ -37,19 +44,36 @@ import CommentView from '@/components/community/CommentView.vue';
 const articleStore = useArticleStore()
 const userStore = useUserStore()
 const route = useRoute()
+const router = useRouter()
+const article = ref(null)
+const postId = ref(null)
 
-const article = ref(null) // 초기값을 null로 변경
-const postId = route.params.id
+const updatePost = (post_id) => {
+  router.push({name: 'update', params: {'id': post_id}})    
+}
+
+const deletePost = (post_id) => {
+  articleStore.deletePost(post_id)
+}
+
+watch(() => route.params.id, async (newId) => {
+  if (newId) {
+    postId.value = newId
+    await articleStore.getDetailPost(postId.value)
+  }
+}, {deep: true})
 
 const handleFavorite = (postId) => {
   articleStore.favoriteArticle(postId)
 }
 
 onMounted(() => {
-  articleStore.getDetailPost(postId)
+  if (route.params.id) {
+    postId.value = route.params.id
+    articleStore.getDetailPost(postId.value)
+  }
 })
 </script>
-
 <style scoped>
 div.card {
   background-color: black;

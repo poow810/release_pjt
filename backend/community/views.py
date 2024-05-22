@@ -31,7 +31,7 @@ def post(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @login_required
 def detail(request, post_id):
     if request.method == 'GET':
@@ -40,6 +40,21 @@ def detail(request, post_id):
         post.save()
         serializer = PostSerializer(post, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    elif request.method == 'PUT':
+        post = get_object_or_404(Post, pk=post_id)
+        serializer = PostSerializer(post, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        post = get_object_or_404(Post, pk=post_id)
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+
 
 @api_view(['POST'])
 @login_required
@@ -92,7 +107,6 @@ def comment(request, post_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'GET':
         comments = Comment.objects.filter(post=post_id)
-        print(comments)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
