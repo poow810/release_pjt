@@ -9,7 +9,7 @@ from accounts.models import Review
 from .models import Movie, Genre
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .serializers import MovieSerializer, GenreSerializer, ReviewSerializer
+from .serializers import MovieSerializer, GenreSerializer, ReviewDetailSerializer, ReviewSerializer
 from django.db.models import Count, Q
 
 
@@ -67,6 +67,7 @@ def movie_like(request, movie_id):
 @login_required
 def detail(request, movie_id):
     if request.method == 'GET':
+        print(request.data)
         movie = get_object_or_404(Movie, movie_id=movie_id)
         serializer = MovieSerializer(movie)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -93,7 +94,17 @@ def review(request, movie_id):
         else:
             return Response({"message": "리뷰가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
         
-        
+
+@api_view(['GET'])
+@login_required
+def detailReview(request, review_id):
+    print(request)
+    if request.method == 'GET':
+        review = get_object_or_404(Review, pk=review_id)
+        serializer = ReviewDetailSerializer(review)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 @login_required
 def weather(request, genre_id):
@@ -121,6 +132,7 @@ def weather(request, genre_id):
 
 @api_view(['GET'])
 def search(request):
+    print(request.GET.get('text'))
     text = request.GET.get('text')
     if not text:
         return Response({"error": "No search text provided"}, status=status.HTTP_400_BAD_REQUEST)

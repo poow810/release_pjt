@@ -46,3 +46,14 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ('user', 'movie')
 
+
+class ReviewDetailSerializer(serializers.ModelSerializer):
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ['id', 'nickname', 'user_image']
+
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model = Review
+        fields = "__all__"
