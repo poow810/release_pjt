@@ -131,10 +131,9 @@ def search(request):
 
     movies = Movie.objects.none()
     persons = Person.objects.none()
-
     if search_type == '영화':
         movies = Movie.objects.filter(title__icontains=text).distinct()
-    elif search_type == '인물':
+    elif search_type == '이름':
         persons = Person.objects.filter(name_kr__icontains=text).distinct()
     else:
         return Response({"error": "Invalid search type"}, status=status.HTTP_400_BAD_REQUEST)
