@@ -22,14 +22,6 @@ def getMovies(request, movie_id):
 
 
 @api_view(['GET'])
-def get_genre(request):
-    if request.method == 'GET':
-        movies = get_list_or_404(Movie)
-        serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
 @login_required
 def genre_select(request):
     if request.method == 'GET':
