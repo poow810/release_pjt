@@ -4,7 +4,7 @@
     <!-- 댓글 카드 -->
     <div class="comment-card p-3 my-2 border rounded" v-for="comment in articleStore.comments" :key="comment.id">
       <div class="d-flex align-items-center" @click="goProfile(comment.user.id)">
-        <img class="rounded-circle m-2" :src="images[comment.user.user_image]"  alt="User Image" style="width: 50px; height: 50px;">
+        <img class="rounded-circle m-2" :src="images[comment.user.user_image]" alt="User Image" style="width: 50px; height: 50px;">
         <strong>{{ comment.user.nickname }}</strong>
       </div>
       <!-- 댓글 내용 -->
@@ -16,17 +16,17 @@
         <p class="text-secondary">{{ formatDate(comment.created_at) }}</p>
         <div>
           <div v-show="userStore.userId == comment.user.id">
-          <button @click="updateComment(articleId, comment.id)">수정</button>
-          <button @click="deleteComment(articleId, comment.id)">삭제</button>
+            <button @click="updateComment(comment.id)">수정</button>
+            <button @click="deleteComment(comment.id)">삭제</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <!-- 댓글 입력 폼 -->
     <form @submit.prevent="createComment">
       <input type="text" v-model="comment" placeholder="댓글을 남겨보세요" class="form-control my-2">
       <button type="submit" class="btn">등록</button>
-    </form>    
+    </form>
   </div>
 </template>
 
@@ -54,49 +54,49 @@ const articleStore = useArticleStore()
 const comment = ref('')
 const loading = ref(true) // 로딩 상태 추가
 
-
-const updateComment = async (articleId, commentId) => {
+const updateComment = async (commentId) => {
   const newContent = prompt("댓글을 수정하세요");
 
   if (newContent && newContent.trim() !== "") {
     await articleStore.updateComment(articleId, commentId, newContent.trim());
+    await fetchComments(articleId); // 수정 후 댓글 목록 재로딩
   } else {
     alert("댓글 내용을 입력해주세요.");
   }
 };
 
-const deleteComment = (articleId, comment_id) => {
-  articleStore.deleteComment(articleId, comment_id)
+const deleteComment = async (commentId) => {
+  await articleStore.deleteComment(articleId, commentId);
+  await fetchComments(articleId); // 삭제 후 댓글 목록 재로딩
 }
 
 const goProfile = (user_id) => {
-  router.push({name: 'profile', params: {id: user_id}})
+  router.push({name: 'profile', params: {id: user_id}});
 }
 
 const createComment = async () => {
-  if (comment.value.trim()) { 
-    await articleStore.createComment(articleId, comment.value)
-    comment.value = ''
-    await articleStore.fetchComments(articleId) // 새 댓글 작성 후 댓글 목록 재로딩
+  if (comment.value.trim()) {
+    await articleStore.createComment(articleId, comment.value);
+    comment.value = '';
+    await fetchComments(articleId); // 새 댓글 작성 후 댓글 목록 재로딩
   }
 }
 
 const fetchComments = async (articleId) => {
-  loading.value = true // 로딩 시작
-  await articleStore.fetchComments(articleId)
-  loading.value = false // 로딩 끝
+  loading.value = true; // 로딩 시작
+  await articleStore.fetchComments(articleId);
+  loading.value = false; // 로딩 끝
 }
 
 onMounted(() => {
-  fetchComments(articleId) // 컴포넌트 마운트 시 댓글 로딩
+  fetchComments(articleId); // 컴포넌트 마운트 시 댓글 로딩
 })
 
 watch(() => articleId, async (newVal, oldVal) => {
   if (newVal !== undefined && newVal !== oldVal) {
-    await fetchComments(newVal)
+    await fetchComments(newVal);
   }
-}, { immediate: true }) // 컴포넌트가 마운트될 때 즉시 실행
-
+}, { immediate: true }); // 컴포넌트가 마운트될 때 즉시 실행
 const formatDate = (dateString) => {
   const options = {
     year: 'numeric',

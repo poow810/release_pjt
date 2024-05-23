@@ -10,8 +10,9 @@
         <label for="password" class="form-label">Password:</label>
         <input type="password" id="password" v-model.trim="password" class="form-control">
       </div>
-      <div class="text-center">
-        <input type="submit" value="Log In" class="btn btn-primary" style="background-color: #CCB15F; border-color: #CCB15F;">
+      <div class="text-center d-flex justify-content-between">
+        <input type="submit" value="로그인" class="btn btn-primary" style="background-color: #CCB15F; border-color: #CCB15F;">
+        <button @click="router.push({ name : 'signup' })" value="회원가입" class="btn btn-primary" style="background-color: #CCB15F; border-color: #CCB15F;">회원가입</button>
       </div>
     </form>
   </div>

@@ -1,8 +1,20 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+// img
+import noimage from '@/assets/static/noimage.png'
+import image1 from '@/assets/static/cinnamoroll.png'
+import image2 from '@/assets/static/kitty.png'
+import image3 from '@/assets/static/kuromi.png'
+import image4 from '@/assets/static/mymelody.png'
+import image5 from '@/assets/static/pompompurin.png'
+const images = [noimage, image1, image2, image3, image4, image5]
+
+import { computed, ref, onMounted, watchEffect, watch } from 'vue'
 import { RouterLink, RouterView, } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
-import { useMovieStore } from '@/stores/movieStore';
+import { useMovieStore } from '@/stores/movieStore'
+import { useProfileStore } from '@/stores/profileStore'
+
+const profileStore = useProfileStore()
 const userStore = useUserStore()
 const searchText = ref('')
 const selectType = ref('') 
@@ -21,23 +33,30 @@ const logOut = function () {
   userStore.logOut()
 }
 
-onMounted(() => {
+onMounted( async() => {
+  if (userStore.isLogIn) {
+    await profileStore.getProfile(userStore.userId)
+  }
   console.log(userStore.isLogIn)
 })
+
+watch(() => userStore.userId, async (newId) => {
+  if (newId && userStore.isLogIn) {
+    await profileStore.getProfile(newId)
+  }
+})
+
 </script>
 
 <template>
   <nav class="navbar navbar-expand-lg" style="background-color: #1b1b1b;">
     <div class="container-fluid">
-      <RouterLink class="navbar-brand text-white" to="/">H&J RecomMans</RouterLink>
+      <RouterLink class="navbar-brand text-white fs-1" style="font-weight: 700;" to="/">PK=PK</RouterLink>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <RouterLink class="nav-link active text-white" aria-current="page" :to="{ name: 'actor' }">배우</RouterLink>
-          </li>
           <li class="nav-item">
             <RouterLink class="nav-link text-white" :to="{ name: 'community' }">커뮤니티</RouterLink>
           </li>
@@ -74,7 +93,9 @@ onMounted(() => {
             <RouterLink v-if="!userStore.isLogIn" class="nav-link text-white" :to="{ name: 'login' }">로그인</RouterLink>
           </li>
           <li>
-            <RouterLink v-if="userStore.isLogIn" class="nav-link text-white" :to="{ name: 'profile', params: {'id': id}}">프로필</RouterLink>
+            <RouterLink v-if="userStore.isLogIn" class="nav-link text-white" :to="{ name: 'profile', params: {'id': id}}">
+              <img :src="images[profileStore.userImage]" alt="" style="width: 50px; height: 50px;">
+            </RouterLink>
           </li>
           <li>
               <button v-if="userStore.isLogIn" class="btn btn-outline-success other text-white" @click="logOut">로그아웃</button>

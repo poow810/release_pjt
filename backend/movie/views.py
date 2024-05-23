@@ -1,16 +1,26 @@
 from itertools import combinations
+import os
 import random
+import re
+from django.conf import settings
 from django.http import JsonResponse
+from openai import OpenAI
+import openai
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from accounts.models import Review
 from .models import Movie, Genre, Person
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .serializers import MovieGenreSerializer, MovieSerializer, GenreSerializer, PersonSerializer, ReviewDetailSerializer, ReviewSerializer
 from django.db.models import Count, Q
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=settings.OPENAI_API_KEY,
+)
 
 
 @api_view(['GET'])
@@ -181,3 +191,101 @@ def search(request):
     data = movie_serializer.data + person_serializer.data
 
     return Response(data, status=status.HTTP_200_OK)
+
+
+
+genre_list = [
+    { 'id': 28, 'name': "action"},
+    { 'id': 12, 'name': "adventure"},
+    { 'id': 16, 'name': "animation"},
+    { 'id': 35, 'name': "comedy"},
+    { 'id': 80, 'name': "crime"},
+    { 'id': 99, 'name': "documentary"},
+    { 'id': 18, 'name': "drama"},
+    { 'id': 10751, 'name': "family"},
+    { 'id': 14, 'name': "fantasy"},
+    { 'id': 36, 'name': "history"},
+    { 'id': 27, 'name': "horror"},
+    { 'id': 10402, 'name': "music"},
+    { 'id': 9648, 'name': "mystery"},
+    { 'id': 10749, 'name': "romance"},
+    { 'id': 878, 'name': "science fiction"},
+    { 'id': 10770, 'name': "tv Movie"},
+    { 'id': 53, 'name': "thriller"},
+    { 'id': 10752, 'name': "war"},
+    { 'id': 37, 'name': "western"}
+]
+
+
+def random_select(genres):
+    movies_with_genres = Movie.objects.annotate(
+        genres_count=Count(
+            'genres', filter=Q(genres__id__in=genres)
+        )
+    ).order_by('-genres_count', '?')
+    max_genres_count = movies_with_genres.first().genres_count if movies_with_genres.exists() else 0
+
+    movies_with_max_genres = movies_with_genres.filter(genres_count=max_genres_count)
+    selected_movie = random.choice(list(movies_with_max_genres)) if movies_with_max_genres else None
+
+    return selected_movie
+
+
+def find_genre(genres):
+    genre_names = []
+    for genre in genres:
+        genre = Genre.objects.get(id=genre)
+        genre_names.append(genre.name)
+    
+    return genre_names
+
+
+@api_view(['GET'])
+@login_required
+def recommend(request):
+    if request.method == 'GET':
+        weather_data = request.query_params.get('weather', '')
+        
+        genre_recommendation_ids = recommendWeather(weather_data)
+        recommend_movie = random_select(genre_recommendation_ids)
+        if recommend_movie:
+            genres_names = find_genre(genre_recommendation_ids)
+            serializer = MovieSerializer(recommend_movie, context={'request': request})
+            return Response({'recommend': serializer.data, 'genres': genres_names })
+        else:
+            return Response({'message': '추천할 영화가 없습니다.'})
+
+def findGenreIdsByNames(genre_names):
+    genre_ids = [genre['id'] for genre in genre_list if genre['name'] in genre_names]
+    print(genre_ids)
+    return genre_ids
+
+def recommendWeather(weather):
+    genre_names = [genre['name'] for genre in genre_list]
+    genre_names_str = ', '.join(genre_names)
+    print(genre_names_str)
+    question = f"The weather today is {weather}. Based on the following genres: {genre_names_str}, what movie genres would be suitable for this weather? Please recommend two genres and answer in the form of **genre**."
+    # question = f"The weather today is {weather}. What movie genres would be suitable for this weather?"
+    try:
+        chat_completion = client.chat.completions.create(
+        messages=[
+            {
+            "role": "user",
+            "content": question
+            }
+        ],
+        model="gpt-4o",
+        )
+        print(chat_completion)
+        response_text = chat_completion.choices[0].message.content.strip()
+        
+        genre_pattern = re.compile(r'\*\*([\w\s/]+)\*\*')
+        recommended_genres = genre_pattern.findall(response_text)
+
+        print("추천 장르:", recommended_genres)
+        return findGenreIdsByNames(recommended_genres)
+    
+    except Exception as e:
+        print(f"Error occurred while calling the OpenAI API: {e}")
+        return []
+    

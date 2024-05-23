@@ -19,7 +19,7 @@
       <p class="movie-detail text-secondary">Popularity</p>
       <p class="movie-detail text-secondary">Average Vote</p>
     </div>
-    <div class="d-flex justify-content-around fs-2">
+    <div class="d-flex justify-content-around align-items-center fs-1">
       <p class="movie-detail">{{ movieStore.detailMovies.release_date }}</p>
       <p class="movie-detail">{{ movieStore.detailMovies.popularity }}</p>
       <p class="movie-detail">{{ movieStore.detailMovies.vote_avg }}</p>
@@ -52,10 +52,10 @@ const userStore = useUserStore();
 const isLiked = ref(false);
 
 const toggleLike = async () => {
-  const likeData = await movieStore.movieLike(movieId); // movieLike 함수의 반환값을 받습니다.
-  if (likeData) { // 정상적으로 데이터를 받았을 경우
-    isLiked.value = likeData.is_liked; // 좋아요 상태 업데이트
-    movieStore.detailMovies.liked_count = likeData.like_count; // 좋아요 개수 업데이트
+  const likeData = await movieStore.movieLike(movieId);
+  if (likeData) {
+    isLiked.value = likeData.is_liked;
+    movieStore.detailMovies.liked_count = likeData.like_count;
   }
 }
 
@@ -112,7 +112,7 @@ onMounted(async () => {
 .movie-detail {
   color: #CCB15F;
   font-weight: bold;
-  width: 200px;
+  width: 350px;
   text-align: center
 }
 

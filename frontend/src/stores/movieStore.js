@@ -8,7 +8,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   const store = useUserStore()
   const token =  store.token
   const router = useRouter()
-  const LOCAL_URL = 'http://172.30.1.32:8000'
+  const LOCAL_URL = 'http://192.168.214.72:8000'
   const SERVER_URL = 'http://192.168.0.13:8000'
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -29,83 +29,77 @@ export const useMovieStore = defineStore('movieStore', () => {
 
   // 평점 높은순
   const getRatedMovies = async () => {
-    axios({
-      method: 'get',
-      url: `${TMDB_BASE_URL}/movie/top_rated`,
-      params: {
-        api_key: API_KEY,
-        language: 'ko-KR'
-      }
-    })
-    .then(res => {
-      console.log('평점영화 데이터 가져오기 성공:', res.data)
-      ratedMovies.value = res.data.results
-    })
-    .catch(err => {
-      console.error('영화 데이터 가져오기 실패:', err)
-    })
+    try {
+      const res = await axios.get(`${TMDB_BASE_URL}/movie/top_rated`, {
+        params: {
+          api_key: API_KEY,
+          language: 'ko-KR'
+        }
+      });
+      ratedMovies.value = res.data.results; // Vue의 반응성 시스템이 감지할 수 있게 직접 업데이트
+    } catch (err) {
+      console.error('영화 데이터 가져오기 실패:', err);
+    }
   }
+
 
   // 현재 상영중
   const getNowPlayingMovies = async () => {
-    axios({
-      method: 'get',
-      url: `${TMDB_BASE_URL}/movie/now_playing`,
-      params: {
-        api_key: API_KEY,
-        language: 'ko-KR'
-      }
-    })
-    .then(res => {
-      console.log('상영영화 데이터 가져오기 성공:', res.data)
-      nowPlayingMovies.value = res.data.results
-    })
-    .catch(err => {
-      console.error('영화 데이터 가져오기 실패:', err)
-    })
-  }
-  
-    // 장르별
-    const getGenreList = async () => {
-      axios({
-        method: 'get',
-        url: `${TMDB_BASE_URL}/genre/movie/list`,
+    try {
+      const res = await axios.get(`${TMDB_BASE_URL}/movie/now_playing`, {
         params: {
           api_key: API_KEY,
           language: 'ko-KR'
         }
       })
-      .then((res) => {
-        console.log('장르 영화 데이터 가져오기 성공:', res.data)
-        genreMovies.value = res.data
-      })
-      .catch((err) => {
-        console.log('데이터수집 실패:', err)
-      })
+      console.log('상영영화 데이터 가져오기 성공:', res.data)
+      nowPlayingMovies.value = res.data.results
+    } catch (err) {
+      console.error('영화 데이터 가져오기 실패:', err)
     }
-
-    // 장르별 인기 영화 가져오기
-    const getPopularMoviesByGenre = async (genreId) => {
-      try {
-        const response = await axios({
-          method: 'get',
-          url: `${TMDB_BASE_URL}/discover/movie`,
-          params: {
-            api_key: API_KEY,
-            language: 'ko-KR',
-            sort_by: 'popularity.desc',
-            include_adult: false,
-            include_video: false,
-            page: 1,
-            with_genres: genreId // 장르 ID를 파라미터로 전달
-          }
-        });
-        console.log('장르별 인기 영화 데이터 가져오기 성공:', response.data);
-        genreMovies.value = response.data.results; // genreMovies에 결과 저장
-      } catch (err) {
-        console.error('장르별 인기 영화 데이터 가져오기 실패:', err);
+  }
+  
+  // 장르별
+  const getGenreList = async () => {
+    axios({
+      method: 'get',
+      url: `${TMDB_BASE_URL}/genre/movie/list`,
+      params: {
+        api_key: API_KEY,
+        language: 'ko-KR'
       }
-    };
+    })
+    .then((res) => {
+      console.log('장르 영화 데이터 가져오기 성공:', res.data)
+      genreMovies.value = res.data.results
+    })
+    .catch((err) => {
+      console.log('데이터수집 실패:', err)
+    })
+  }
+
+  // 장르별 인기 영화 가져오기
+  const getPopularMoviesByGenre = async (genreId) => {
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${TMDB_BASE_URL}/discover/movie`,
+        params: {
+          api_key: API_KEY,
+          language: 'ko-KR',
+          sort_by: 'popularity.desc',
+          include_adult: false,
+          include_video: false,
+          page: 1,
+          with_genres: genreId // 장르 ID를 파라미터로 전달
+        }
+      });
+      console.log('장르별 인기 영화 데이터 가져오기 성공:', response.data);
+      genreMovies.value = response.data.results; // genreMovies에 결과 저장
+    } catch (err) {
+      console.error('장르별 인기 영화 데이터 가져오기 실패:', err);
+    }
+  };
 
   
   // 영화 상세 조회
@@ -229,5 +223,5 @@ export const useMovieStore = defineStore('movieStore', () => {
 
   return { API_KEY, token, SERVER_URL, LOCAL_URL, nowPlayingMovies, ratedMovies, genreMovies, movieLike,
     isLiked, likeCount, movieReview, detailMovies, detailReviews, searchMovies, movieDetail, getReview, createReview, getRatedMovies, getNowPlayingMovies, getGenreList,
-    getPopularMoviesByGenre, searchMovie, getDetailReview }
+    getPopularMoviesByGenre, searchMovie, getDetailReview, }
 }, {persist: true})

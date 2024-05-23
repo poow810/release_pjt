@@ -6,7 +6,6 @@ import CommuView from '@/views/community/CommuView.vue'
 import CommuArticleCreateView from '@/views/community/CommuArticleCreateView.vue'
 import LogOug from '@/components/accounts/LogOut.vue'
 import PasswordChange from '@/components/accounts/PasswordChange.vue'
-import ActorView from '@/views/actors/ActorView.vue'
 import RecommendView from '@/views/recommend/RecommendView.vue'
 import CommuArticleDetail from '@/views/community/CommuArticleDetail.vue'
 import ProfileView from '@/views/profile/ProfileView.vue'
@@ -24,13 +23,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
-    },
-
-    // ACTOR
-    {
-      path: '/actors',
-      name: 'actor',
-      component: ActorView
     },
 
     // COMMUNITY

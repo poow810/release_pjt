@@ -8,7 +8,7 @@ export const useRecomStore = defineStore('recomStore', () => {
   const store = useUserStore()
   const router = useRouter()
   const SERVER_URL = 'http://43.202.204.222'
-  const LOCAL_URL = 'http://192.168.0.13:8000'
+  const LOCAL_URL = 'http://192.168.214.72:8000'
 
   // 응답데이터 저장
   const userSetGenre = ref(null)

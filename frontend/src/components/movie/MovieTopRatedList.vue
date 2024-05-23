@@ -16,22 +16,23 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useMovieStore } from '@/stores/movieStore'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 import { useRouter } from 'vue-router'
 
 const store = useMovieStore()
-const movies = store.ratedMovies 
+const movies = ref([]) 
 const router = useRouter()
 
 const goDetail = (movie_id) => {
   router.push({name: 'movieDetail', params: {id: movie_id}})
 }
 
-onMounted(() => {
-  store.getRatedMovies()
+onMounted(async () => {
+  await store.getRatedMovies()
+  movies.value = store.ratedMovies
 })
 
 </script>

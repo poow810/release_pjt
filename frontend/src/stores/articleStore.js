@@ -9,7 +9,7 @@ export const useArticleStore = defineStore('articleStore', () => {
   const router = useRouter()
   const articles = ref([])
   const SERVER_URL = 'http://43.202.204.222'
-  const LOCAL_URL = 'http://192.168.0.13:8000'
+  const LOCAL_URL = 'http://192.168.214.72:8000'
   const isLiked = ref(false)
   const likeCount = ref(0)
   const comments = ref([])
@@ -22,7 +22,7 @@ export const useArticleStore = defineStore('articleStore', () => {
 
   const commentUserId = ref(null)
   const commentNickName = ref(null)
-
+  const commentContent = ref(null)
 
   const getArticles = function () {
     axios({
@@ -161,10 +161,10 @@ export const useArticleStore = defineStore('articleStore', () => {
           Authorization: `Token ${store.token}`
         }
       })
-      console.log(response.data)
       comments.value = response.data
       commentNickName.value = response.data.nickname
       commentUserId.value = response.data.id
+      commentContent.value = response.data.content
     } catch (err) {
       console.log('댓글 조회 기능 처리 중 에러', err);
     }
@@ -201,6 +201,9 @@ export const useArticleStore = defineStore('articleStore', () => {
         }
       })
       console.log(response.data)
+      commentContent.value = response.data.comment
+      console.log(commentContent.value)
+      router.push({name: 'articleDetail', params: {id: articleId}})
       alert("수정되었습니다.")
     } catch (err) {
       console.log('수정 에러')
@@ -225,6 +228,6 @@ export const useArticleStore = defineStore('articleStore', () => {
   }
 
   return  {SERVER_URL, LOCAL_URL, articles, isLiked, likeCount, store, comments, detailPosts,
-    detailPostId, detailNickName, detailUserId, commentUserId, commentNickName, updateComment, deleteComment,
+    detailPostId, detailNickName, detailUserId, commentUserId, commentNickName, commentContent, updateComment, deleteComment, 
     fetchComments, getDetailPost, getArticles, createArticle, favoriteArticle, createComment, updatePost, deletePost}
 }, {persist: true})
