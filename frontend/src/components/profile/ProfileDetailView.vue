@@ -30,6 +30,7 @@
                 <button @click="editNickname = true" class="btn btn-primary">닉네임 변경하기</button>
               </div>
             </div>
+  
             <div v-else>
               <button @click="following(user_id)" class="btn" :class="{'btn-secondary': profileStore.isFollowing, 'btn-primary': !profileStore.isFollowing}">
                 {{ profileStore.isFollowing ? '팔로잉 취소' : '팔로잉' }}
@@ -159,21 +160,22 @@ if (profileStore.userImage !== null) {
   selectedImage.value = noimage
 }
 
-watch(() => route.params.id, (newValue) => {
-  if (newValue) {
-    profileStore.removeProfile()
-    loading.value = true
-    profileStore.getProfile(newValue).then(() => {
-      loading.value = false
-    })
-  }
-})
 onMounted(async () => {
+  console.log('Component mounted - start'); // 디버깅용 로그
   loading.value = true
   profileStore.removeProfile()
-  await profileStore.getProfile(user_ids)
+
+  try {
+    await profileStore.getProfile(user_ids)
+    console.log('Profile loaded successfully'); // 성공 로그
+  } catch (error) {
+    console.error('Error loading profile:', error); // 에러 로그
+  }
+
   loading.value = false
+  console.log('Component mounted - end'); // 디버깅용 로그
 })
+
 </script>
 
 <style scoped>

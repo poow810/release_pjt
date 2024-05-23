@@ -7,111 +7,77 @@ export const useUserStore = defineStore('userStore', () => {
   const token = ref(null)
   const router = useRouter()
   const SERVER_URL = 'http://43.202.204.222'
-  const LOCAL_URL = 'http://192.168.214.72:8000'
+  const LOCAL_URL = 'http://192.168.85.248:8000'
   const userId = ref(null)
+  const userInfo = ref(null)
 
-  const userInfo= ref(null)
+  const isLogIn = computed(() => token.value !== null)
 
-
-  // 로그인 확인
-  const isLogIn = computed(() => {
-    if (token.value === null) {
-      return false
-    } else {
-      return true
-    }
-  })
-  
-  // 로그인
-  const logIn = async function (payload) { // async 키워드 추가
+  const logIn = async (payload) => {
     const { username, password } = payload
     try {
-      const res = await axios({
-        method: 'post',
-        url: `${LOCAL_URL}/accounts/login/`,
-        data: { username, password },
+      const res = await axios.post(`${LOCAL_URL}/accounts/login/`, { username, password }, {
         headers: { 'Content-Type': 'application/json' }
       })
-      
       token.value = res.data.key
-      await checkUser(token.value) // await를 사용하여 비동기 처리 기다림
-      router.push({ name: 'home' }) // userId가 업데이트된 후에 홈으로 이동
+      await checkUser(token.value)
+      router.push({ name: 'home' })
     } catch (err) {
       alert(err.response.data.non_field_errors)
-      console.log(err);
+      console.log(err)
     }
   }
 
-  // 로그인 후 사용자 확인 및 정의
-  const checkUser = (token) => {
-    axios({
-      method: 'GET',
-      url: `${LOCAL_URL}/accounts/user/`,
-      headers: {
-        'Authorization': `Token ${token}`
-      }
-    })
-    .then(res => {
-      console.log(res.data)
+  const checkUser = async (token) => {
+    try {
+      const res = await axios.get(`${LOCAL_URL}/accounts/user/`, {
+        headers: { 'Authorization': `Token ${token}` }
+      })
       userId.value = res.data.pk
       userInfo.value = res.data
-    })
-    .catch(err => { console.log(err) })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  // 로그아웃
-  const logOut = function () {
-    console.log(token.value)
-    axios({
-      method: 'post',
-      url: `${LOCAL_URL}/accounts/logout/`,
-      headers: { Authorization: `Token ${token.value}`}
-    })
-    .then((res) => {
-      token.value = null // token 초기화
+  const logOut = async () => {
+    try {
+      await axios.post(`${LOCAL_URL}/accounts/logout/`, {}, {
+        headers: { Authorization: `Token ${token.value}` }
+      })
+      token.value = null
       userInfo.value = null
       router.push({ name: 'login' })
-    })
-    .catch((err) => {
+    } catch (err) {
       console.log('로그아웃 실패')
       console.log(err)
-    })
+    }
   }
-  
-  // 회원가입
-  const signUp = function (payload) {
-    const { username, nickname, email, password1, password2 } = payload
 
+  const signUp = async (payload) => {
+    const { username, nickname, email, password1, password2 } = payload
     if (password1 !== password2) {
       alert('비밀번호가 일치하지 않습니다.')
-      return router.push({name:'signup'})
+      router.push({ name: 'signup' })
+      return
     }
-    axios({
-      method: 'post',
-      url: `${LOCAL_URL}/accounts/signup/`,
-      data: {
+    try {
+      await axios.post(`${LOCAL_URL}/accounts/signup/`, {
         username, nickname, email, password1, password2
-      }
-    })
-    .then((res) => {
-      console.log(res)
-      const password = password1
-      logIn({ username, password })
-    })
-    .catch((err) => {
-      const errorResponse = JSON.parse(err.response.request.responseText);
-      const firstErrorField = Object.keys(errorResponse)[0];
-      const firstErrorMessage = errorResponse[firstErrorField][0];
-      
-      alert(`${firstErrorMessage}`);
-      console.log(err);
-    })
+      })
+      await logIn({ username, password: password1 })
+    } catch (err) {
+      const errorResponse = JSON.parse(err.response.request.responseText)
+      const firstErrorField = Object.keys(errorResponse)[0]
+      const firstErrorMessage = errorResponse[firstErrorField][0]
+      alert(`${firstErrorMessage}`)
+      console.log(err)
+    }
   }
 
   const updateImage = (index) => {
     userInfo.value.user_image = index
   }
 
-  return { userId, token, SERVER_URL, LOCAL_URL, isLogIn, userInfo,
-  signUp, logIn, logOut, checkUser, updateImage }
-}, {persist: true})
+  return { userId, token, SERVER_URL, LOCAL_URL, isLogIn, userInfo, signUp, logIn, logOut, checkUser, updateImage }
+}, { persist: true })

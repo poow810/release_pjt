@@ -8,7 +8,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   const store = useUserStore()
   const token =  store.token
   const router = useRouter()
-  const LOCAL_URL = 'http://192.168.214.72:8000'
+  const LOCAL_URL = 'http://192.168.85.248:8000'
   const SERVER_URL = 'http://192.168.0.13:8000'
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -204,7 +204,7 @@ export const useMovieStore = defineStore('movieStore', () => {
       })
       searchMovies.value = response.data
       console.log(response.data)
-      router.push({name: 'movieSearch'})
+      router.push({name: 'movieSearch', params: {type: type}})
     }
     catch (err) {
       console.log('영화 검색 데이터 가져오기 실패:', err);

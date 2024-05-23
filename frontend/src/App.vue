@@ -1,5 +1,4 @@
 <script setup>
-// img
 import noimage from '@/assets/static/noimage.png'
 import image1 from '@/assets/static/cinnamoroll.png'
 import image2 from '@/assets/static/kitty.png'
@@ -8,32 +7,31 @@ import image4 from '@/assets/static/mymelody.png'
 import image5 from '@/assets/static/pompompurin.png'
 const images = [noimage, image1, image2, image3, image4, image5]
 
-import { computed, ref, onMounted, watchEffect, watch } from 'vue'
-import { RouterLink, RouterView, } from 'vue-router'
+import { computed, ref, onMounted, watch } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useMovieStore } from '@/stores/movieStore'
 import { useProfileStore } from '@/stores/profileStore'
 
 const profileStore = useProfileStore()
 const userStore = useUserStore()
-const searchText = ref('')
-const selectType = ref('') 
 const movieStore = useMovieStore()
 
-const id = computed(() => {
-  return userStore.userId
-})
+const searchText = ref('')
+const selectType = ref('')
+
+const id = computed(() => userStore.userId)
 
 const searchMovie = () => {
   movieStore.searchMovie(selectType.value, searchText.value)
   searchText.value = ''
 }
 
-const logOut = function () { 
+const logOut = () => {
   userStore.logOut()
 }
 
-onMounted( async() => {
+onMounted(async () => {
   if (userStore.isLogIn) {
     await profileStore.getProfile(userStore.userInfo.id)
   }
@@ -45,7 +43,6 @@ watch(() => userStore.userId, async (newId) => {
     await profileStore.getProfile(newId)
   }
 })
-
 </script>
 
 <template>
@@ -71,10 +68,7 @@ watch(() => userStore.userId, async (newId) => {
               <li><RouterLink class="dropdown-item text-white" href="#">Something else here</RouterLink></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <!-- <input class="nav-link disabled text-white" href="#" tabindex="-1" aria-disabled="true" v-model="searchText" @keypress.enter="searchMovie" placeholder="검색어를 입력해주세요.">
-            </span> -->
-          </li>
+          <li class="nav-item"></li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <div class="d-flex">
@@ -87,27 +81,60 @@ watch(() => userStore.userId, async (newId) => {
             <button class="btn btn-outline-success other text-white" id="basic-addon1" @click="searchMovie">Search</button>
           </div>
           <li class="nav-item">
-            <RouterLink v-if="!userStore.userInfo" class= "nav-link text-white" :to="{ name: 'signup' }">회원가입</RouterLink>
+            <RouterLink v-if="!userStore.userInfo" class="nav-link text-white" :to="{ name: 'signup' }">회원가입</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink v-if="!userStore.userInfo" class="nav-link text-white" :to="{ name: 'login' }">로그인</RouterLink>
           </li>
-          <li>
-            <RouterLink v-if="userStore.userInfo" class="nav-link text-white" :to="{ name: 'profile', params: {'id': userStore.userInfo.id}}">
-              <img :src="images[userStore.userInfo.user_image]" alt="" style="width: 50px; height: 50px;">
+          <li v-if="userStore.userInfo" class="nav-item">
+            <RouterLink class="nav-link text-white" :to="{ name: 'profile', params: { id: userStore.userInfo.id }}">
+              <img :src="images[userStore.userInfo.user_image]" alt="프로필 이미지" style="width: 50px; height: 50px;">
             </RouterLink>
           </li>
-          <li>
-              <button v-if="userStore.userInfo" class="btn btn-outline-success other text-white" @click="logOut">로그아웃</button>
+          <li v-if="userStore.userInfo" class="nav-item">
+            <button class="btn btn-outline-success other text-white" @click="logOut">로그아웃</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   
-
   <RouterView />
 </template>
+
+<style scoped>
+.navbar-nav .nav-item {
+  display: flex;
+}
+.dropdown-menu {
+  border-radius: 5px;
+  border-color: #CCB15F;
+  background-color: black;
+}
+.navbar-toggler-icon {
+  color: beige;
+}
+.navbar-toggler.collapsed {
+  color: gray;
+  border-color: gray;
+  background-color: #1B1B1B;
+}
+.navbar-toggler {
+  color: gray;
+  border-color: #685a30;
+  background-color: #1B1B1B;
+}
+span.navbar-toggler-icon {
+  color: gray;
+  border-color: #CCB15F;
+}
+.other {
+  color: gray;
+  border-color: #CCB15F;
+  background-color: #1B1B1B;
+  border-radius: 100px;
+}
+</style>
 
 
 

@@ -1,4 +1,5 @@
 <template>
+    <div>{{ searchMovie }}</div>
     <div @click="goDetail(searchMovie.movie_id)" class="card-content">
         <img :src="posterUrl" alt="poster" class="poster-image">
         <p class="fs-2 mt-2">{{ searchMovie.title }}</p>
@@ -8,13 +9,15 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const props = defineProps({
     searchMovie: Object
 });
 
+const route = useRoute()
+const type = ref(route.params.type)
 const goDetail = (movie_id) => {
     console.log(movie_id)
     router.push({name: 'movieDetail', params: {id: movie_id}})

@@ -34,7 +34,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "192.168.214.72",
     ".ap-northeast-2.compute.amazonaws.com",
-    "43.202.204.222"
+    "43.202.204.222",
+    "172.30.1.32",
+    "192.168.85.248"
 ]
 
 
@@ -197,7 +199,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+ACCOUNT_EMAIL_VERIFICATION = "none"
 TMDB_API_KEY = env('TMDB_API_KEY')
 OPENAI_API_KEY = env('OPENAI_API_KEY')
 
