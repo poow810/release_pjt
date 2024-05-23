@@ -32,6 +32,8 @@ SECRET_KEY = 'django-insecure-(e(msgo*@flawm!5oy73aokxc@wn%6k+#=vs&vlk-!21%6j0sv
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'pkpk.o-r.kr',
+    'https://reliable-cendol-bcf2d3.netlify.app/'
     "192.168.214.72",
     ".ap-northeast-2.compute.amazonaws.com",
     "43.202.204.222",
