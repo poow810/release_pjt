@@ -1,5 +1,5 @@
 <template>
-    <div>{{ searchMovie }}</div>
+    <!-- <div>{{ searchMovie }}</div> -->
     <div @click="goDetail(searchMovie.movie_id)" class="card-content">
         <img :src="posterUrl" alt="poster" class="poster-image">
         <p class="fs-2 mt-2">{{ searchMovie.title }}</p>

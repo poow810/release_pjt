@@ -161,7 +161,6 @@ if (profileStore.userImage !== null) {
 }
 
 onMounted(async () => {
-  console.log('Component mounted - start'); // 디버깅용 로그
   loading.value = true
   profileStore.removeProfile()
 

@@ -77,7 +77,7 @@ watch(() => userStore.userInfo, async (newId) => {
               <option value="영화">영화</option>
               <option value="이름">이름</option>
             </select>
-            <input type="text" class="form-control me-2 other" placeholder="영화를 입력해주세요 :)" aria-label="Input group example" aria-describedby="basic-addon1" v-model="searchText" @keypress.enter="searchMovie">
+            <input type="text" class="form-control me-2 other" placeholder="검색어를 입력해주세요 :)" aria-label="Input group example" aria-describedby="basic-addon1" v-model="searchText" @keypress.enter="searchMovie">
             <button class="btn btn-outline-success other text-white" id="basic-addon1" @click="searchMovie">Search</button>
           </div>
           <li class="nav-item">

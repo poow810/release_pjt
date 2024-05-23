@@ -4,28 +4,54 @@
             <h3 class="fs-1 text-center text-danger">검색된 데이터가 없습니다.</h3>
         </div>
         <p class="fs-3 text-center" style="color: white; font-weight: 700;">Search Movie✔</p>
-        <swiper
-            :slides-per-view="1"
-            :space-between="30"
-            class="mb-5"
-        >
-            <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
-                <MovieSearchList :searchMovie="searchMovie" class="card-custom" />
-            </swiper-slide>
-        </swiper>
-        <hr class="border-warning">
-        <br>
-        <p class="fs-3 text-center" style="color: white; font-weight: 700;">이런 영화는 어떠신가요?</p>
-        <swiper
-            :slides-per-view="3"
-            :space-between="30"
-            pagination
-            loop
-        >
-            <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
-                <MovieSearchList :searchMovie="searchMovie" class="card-custom" />
-            </swiper-slide>
-        </swiper>
+        <div v-if="type=='영화'">
+            <swiper
+                :slides-per-view="1"
+                :space-between="30"
+                class="mb-5"
+            >
+                <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
+                    <MovieSearchList :searchMovie="searchMovie" class="card-custom" />
+                </swiper-slide>
+            </swiper>
+            <hr class="border-warning">
+            <br>
+            <p class="fs-3 text-center" style="color: white; font-weight: 700;">이런 영화는 어떠신가요?</p>
+            <swiper
+                :slides-per-view="3"
+                :space-between="30"
+                pagination
+                loop
+            >
+                <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
+                    <MovieSearchList :searchMovie="searchMovie" class="card-custom" />
+                </swiper-slide>
+            </swiper>
+        </div>
+        <div v-else>
+            <swiper
+                :slides-per-view="1"
+                :space-between="30"
+                class="mb-5"
+            >
+                <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
+                    <MovieSearchActor :searchMovie="searchMovie" :actor_id="searchMovie.id" class="card-custom" />
+                </swiper-slide>
+            </swiper>
+            <hr class="border-warning">
+            <br>
+            <p class="fs-3 text-center" style="color: white; font-weight: 700;">이런 영화는 어떠신가요?</p>
+            <swiper
+                :slides-per-view="3"
+                :space-between="30"
+                pagination
+                loop
+            >
+                <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
+                    <MovieSearchActor :searchMovie="searchMovie" :actor_id="searchMovie.id" class="card-custom" />
+                </swiper-slide>
+            </swiper>
+        </div>
     </div>
 </template>
 
@@ -33,6 +59,7 @@
 import { onMounted } from 'vue'
 import { useMovieStore } from '@/stores/movieStore';
 import MovieSearchList from '@/components/movie/MovieSearchList.vue';
+import MovieSearchActor from '@/components/movie/MovieSearchActor.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 
