@@ -3,8 +3,8 @@
         <div v-if="!movieStore.searchMovies.length" class="p-5 text-center text-warning">
             <h3 class="fs-1 text-center text-danger">검색된 데이터가 없습니다.</h3>
         </div>
-        <p class="fs-3 text-center" style="color: white; font-weight: 700;">Search Movie✔</p>
         <div v-if="type=='영화'">
+            <p class="fs-3 text-center" style="color: white; font-weight: 700;">Search Movie✔</p>
             <swiper
                 :slides-per-view="1"
                 :space-between="30"
@@ -29,6 +29,7 @@
             </swiper>
         </div>
         <div v-else>
+            <p class="fs-3 text-center" style="color: white; font-weight: 700;">Search Actor✔</p>
             <swiper
                 :slides-per-view="1"
                 :space-between="30"
@@ -56,13 +57,17 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useMovieStore } from '@/stores/movieStore';
 import MovieSearchList from '@/components/movie/MovieSearchList.vue';
 import MovieSearchActor from '@/components/movie/MovieSearchActor.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+
+const type = ref(route.params.type)
 const movieStore = useMovieStore();
 
 onMounted(() => {

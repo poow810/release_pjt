@@ -93,7 +93,7 @@ const router = createRouter({
       component: MovieView
     },
     {
-      path: '/movies/search',
+      path: '/movies/search/:type',
       name: 'movieSearch',
       component: MovieSearchView
     },
