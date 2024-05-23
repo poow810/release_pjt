@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    
+    <div v-if="isLoading" class="loading-container">
+      <img :src="loadingImg" alt="Loading..." />
+    </div>
     <div class="white">
       <p class="body fs-3 mt-3">자유게시판</p>
       <hr>
@@ -85,13 +87,14 @@
 import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useArticleStore } from '@/stores/articleStore';
+import loadingImg from '@/assets/static/loading.gif'
 
 const store = useArticleStore();
 const router = useRouter();
 const category = ref(null);
 const currentPage = ref(1);
 const postsPerPage = 10;
-
+const isLoading = ref(false);
 const categoryNames = {
   1: '영화',
   2: '배우',
@@ -99,13 +102,21 @@ const categoryNames = {
 };
 
 onMounted(async () => {
-  await store.getArticles();
-  if (store.articles.posts.length > 0) {
-    category.value = categoryNames[store.articles.posts[0].category] || '알 수 없음';
-  } else {
-    category.value = 'No Category';
+  isLoading.value = true; // 데이터 요청 전 로딩 상태를 true로 설정
+  try {
+    await store.getArticles();
+    if (store.articles.posts.length > 0) {
+      category.value = categoryNames[store.articles.posts[0].category] || '알 수 없음';
+    } else {
+      category.value = 'No Category';
+    }
+  } catch (error) {
+    console.error("데이터 로딩 중 오류 발생:", error);
+  } finally {
+    isLoading.value = false; // 요청 완료 후 로딩 상태를 false로 설정
   }
 });
+
 
 const goProfile = (user_id) => {
   router.push({name: 'profile', params: { id: user_id}})

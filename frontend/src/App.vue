@@ -5,6 +5,7 @@ import image2 from '@/assets/static/kitty.png'
 import image3 from '@/assets/static/kuromi.png'
 import image4 from '@/assets/static/mymelody.png'
 import image5 from '@/assets/static/pompompurin.png'
+import logo from '@/assets/static/logo.png'
 const images = [noimage, image1, image2, image3, image4, image5]
 
 import { computed, ref, onMounted, watch } from 'vue'
@@ -48,7 +49,7 @@ watch(() => userStore.userInfo, async (newId) => {
 <template>
   <nav class="navbar navbar-expand-lg" style="background-color: #1b1b1b;">
     <div class="container-fluid">
-      <RouterLink class="navbar-brand text-white fs-1" style="font-weight: 700;" to="/">PK=PK</RouterLink>
+      <RouterLink class="navbar-brand text-white fs-1" style="font-weight: 700;" to="/"><img style="width: 60px;" :src="logo" alt=""></RouterLink>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

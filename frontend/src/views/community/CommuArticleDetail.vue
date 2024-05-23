@@ -1,9 +1,9 @@
 <template>
-  <div v-if="loading" class="loading-text">
-    <h3>로딩 중...</h3>
-    <img :src="loadingImg" class="loading" style="width:50px;">
-  </div>
   <div class="container mt-5">
+    <div v-if="loading" class="loading-text">
+      <h3>로딩 중...</h3>
+      <img :src="loadingImg" class="loading" style="width:50px;">
+    </div>
     <div v-if="articleStore.detailPosts" class="card p-3">
       <h1 class="card-title mt-4">{{ articleStore.detailPosts.title }}</h1>
       <div>
@@ -74,12 +74,12 @@ const handleFavorite = (postId) => {
   articleStore.favoriteArticle(postId)
 }
 
-onMounted(() => {
+onMounted(async () => {
   articleStore.removeArticle()
-  loading.value = true  
+  loading.value = true
   if (route.params.id) {
     postId.value = route.params.id
-    articleStore.getDetailPost(postId.value)
+    await articleStore.getDetailPost(postId.value) // await 추가
     loading.value = false
   }
 })

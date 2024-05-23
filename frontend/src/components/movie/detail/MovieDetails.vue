@@ -14,7 +14,9 @@
       </div>
       <p class="liked-count fs-2">좋아요 개수: {{ movieStore.detailMovies.liked_count }}</p>
     </div>
-    <img :src="`https://image.tmdb.org/t/p/original` + movieStore.detailMovies.poster_path" alt="Movie Poster" class="movie-poster img-fluid my-3">
+    <div class="d-flex justify-content-center">
+      <img :src="`https://image.tmdb.org/t/p/original` + movieStore.detailMovies.poster_path" alt="Movie Poster" class="movie-poster img-fluid my-3">
+    </div>
     <p class="movie-overview">{{ movieStore.detailMovies.overview }}</p>
 
     <!-- 개봉일자, 인기도, 평점 -->
