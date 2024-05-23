@@ -78,12 +78,11 @@ def detail(request, movie_id):
 @login_required
 def review(request, movie_id):
     if request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data, many=True, context={'request': request})
+        serializer = ReviewSerializer(data=request.data, context={'request': request})
         movie = get_object_or_404(Movie, movie_id=movie_id)
         if serializer.is_valid():
             serializer.save(user=request.user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'GET':
@@ -93,13 +92,12 @@ def review(request, movie_id):
             serializer = ReviewSerializer(reviews, many=True, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response({"message": "리뷰가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "리뷰가 없습니다."}, status=status.HTTP_404_NOT_FOUND) 
         
 
 @api_view(['GET'])
 @login_required
 def detailReview(request, review_id):
-    print(request)
     if request.method == 'GET':
         review = get_object_or_404(Review, pk=review_id)
         serializer = ReviewDetailSerializer(review, context={'request': request})
@@ -257,15 +255,12 @@ def recommend(request):
 
 def findGenreIdsByNames(genre_names):
     genre_ids = [genre['id'] for genre in genre_list if genre['name'] in genre_names]
-    print(genre_ids)
     return genre_ids
 
 def recommendWeather(weather):
     genre_names = [genre['name'] for genre in genre_list]
     genre_names_str = ', '.join(genre_names)
-    print(genre_names_str)
     question = f"The weather today is {weather}. Based on the following genres: {genre_names_str}, what movie genres would be suitable for this weather? Please recommend two genres and answer in the form of **genre**."
-    # question = f"The weather today is {weather}. What movie genres would be suitable for this weather?"
     try:
         chat_completion = client.chat.completions.create(
         messages=[
@@ -276,13 +271,11 @@ def recommendWeather(weather):
         ],
         model="gpt-4o",
         )
-        print(chat_completion)
         response_text = chat_completion.choices[0].message.content.strip()
         
         genre_pattern = re.compile(r'\*\*([\w\s/]+)\*\*')
         recommended_genres = genre_pattern.findall(response_text)
 
-        print("추천 장르:", recommended_genres)
         return findGenreIdsByNames(recommended_genres)
     
     except Exception as e:

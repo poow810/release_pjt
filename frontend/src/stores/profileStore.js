@@ -90,7 +90,10 @@ export const useProfileStore = defineStore('profileStore', () => {
         }
     }
 
+    const removeProfile = () => {
+        userImage.value = null
+    }
 
     return { SERVER_URL, LOCAL_URL, followers_count, followings_count, review_count, changeFollowerCount, isFollowing, userImage, userName, nickName,
-        likeMovies, posts, reviews, getProfile, userFollowing, changeNickname }
+        likeMovies, posts, reviews, getProfile, userFollowing, changeNickname, removeProfile }
 }, { persist: true })

@@ -1,10 +1,14 @@
 <template>
+  <div v-if="loading" class="loading-text">
+    <h3>로딩 중...</h3>
+    <img :src="loadingImg" class="loading" style="width:50px;">
+  </div>
   <div class="container mt-5">
     <div v-if="articleStore.detailPosts" class="card p-3">
       <h1 class="card-title mt-4">{{ articleStore.detailPosts.title }}</h1>
       <div>
         <p>{{ articleStore.detailNickName }}</p>
-        <div v-show="userStore.userId == articleStore.detailUserId">
+        <div v-show="userStore.userInfo.id == articleStore.detailUserId">
           <button @click="updatePost(articleStore.detailPosts.id)">수정</button>
           <button @click="deletePost(articleStore.detailPosts.id)">삭제</button>
         </div>
@@ -40,6 +44,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useArticleStore } from '@/stores/articleStore'
 import CommentView from '@/components/community/CommentView.vue';
+import loadingImg from '@/assets/static/loading.gif'
 
 const articleStore = useArticleStore()
 const userStore = useUserStore()
@@ -47,6 +52,7 @@ const route = useRoute()
 const router = useRouter()
 const article = ref(null)
 const postId = ref(null)
+const loading = ref(true)
 
 const updatePost = (post_id) => {
   router.push({name: 'update', params: {'id': post_id}})    
@@ -57,6 +63,7 @@ const deletePost = (post_id) => {
 }
 
 watch(() => route.params.id, async (newId) => {
+
   if (newId) {
     postId.value = newId
     await articleStore.getDetailPost(postId.value)
@@ -68,9 +75,12 @@ const handleFavorite = (postId) => {
 }
 
 onMounted(() => {
+  articleStore.removeArticle()
+  loading.value = true  
   if (route.params.id) {
     postId.value = route.params.id
     articleStore.getDetailPost(postId.value)
+    loading.value = false
   }
 })
 </script>

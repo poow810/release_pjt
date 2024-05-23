@@ -10,6 +10,9 @@ export const useUserStore = defineStore('userStore', () => {
   const LOCAL_URL = 'http://192.168.214.72:8000'
   const userId = ref(null)
 
+  const userInfo= ref(null)
+
+
   // 로그인 확인
   const isLogIn = computed(() => {
     if (token.value === null) {
@@ -51,6 +54,7 @@ export const useUserStore = defineStore('userStore', () => {
     .then(res => {
       console.log(res.data)
       userId.value = res.data.pk
+      userInfo.value = res.data
     })
     .catch(err => { console.log(err) })
   }
@@ -65,6 +69,7 @@ export const useUserStore = defineStore('userStore', () => {
     })
     .then((res) => {
       token.value = null // token 초기화
+      userInfo.value = null
       router.push({ name: 'login' })
     })
     .catch((err) => {
@@ -103,7 +108,10 @@ export const useUserStore = defineStore('userStore', () => {
     })
   }
 
+  const updateImage = (index) => {
+    userInfo.value.user_image = index
+  }
 
-  return { userId, token, SERVER_URL, LOCAL_URL, isLogIn,
-  signUp, logIn, logOut, checkUser }
+  return { userId, token, SERVER_URL, LOCAL_URL, isLogIn, userInfo,
+  signUp, logIn, logOut, checkUser, updateImage }
 }, {persist: true})

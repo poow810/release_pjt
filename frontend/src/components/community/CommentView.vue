@@ -15,7 +15,7 @@
       <div class="text-muted m-2">
         <p class="text-secondary">{{ formatDate(comment.created_at) }}</p>
         <div>
-          <div v-show="userStore.userId == comment.user.id">
+          <div v-show="userStore.userInfo.id == comment.user.id">
             <button @click="updateComment(comment.id)">수정</button>
             <button @click="deleteComment(comment.id)">삭제</button>
           </div>

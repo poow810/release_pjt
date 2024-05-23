@@ -9,6 +9,10 @@ from rest_framework.views import APIView
 from .serializers import FindUserNameSerializer, UserCommentSerializer, UserMovieSerializer, UserPostSerializer, UserDetailsSerializer
 from community.models import Comment, Post
 
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .serializers import CustomUserDetailSerializer
+
 User = get_user_model()
 
 @api_view(['POST'])
@@ -92,3 +96,11 @@ def comments(request, user_id):
         comments = get_list_or_404(Comment, user=user_id)
         serializer = UserCommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class CustomUserDetailView(generics.RetrieveAPIView):
+    serializer_class = CustomUserDetailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user

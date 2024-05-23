@@ -162,9 +162,6 @@ export const useMovieStore = defineStore('movieStore', () => {
     }
   }
 
-  const updateReview = async (movieId, payload) => {
-
-  }
 
   const getReview = async (movieId) => {
     try {
@@ -189,6 +186,10 @@ export const useMovieStore = defineStore('movieStore', () => {
   }
 
   const searchMovie = async (type, text) => {
+    if (type == '') {
+      alert('카테고리를 선택해주세요.')
+      return
+    }
     try {
       const response = await axios({
         method: 'get',
@@ -221,7 +222,11 @@ export const useMovieStore = defineStore('movieStore', () => {
     }
   }
 
+  const removeMovieDetail = () => {
+    detailMovies.value = {}
+  }
+
   return { API_KEY, token, SERVER_URL, LOCAL_URL, nowPlayingMovies, ratedMovies, genreMovies, movieLike,
     isLiked, likeCount, movieReview, detailMovies, detailReviews, searchMovies, movieDetail, getReview, createReview, getRatedMovies, getNowPlayingMovies, getGenreList,
-    getPopularMoviesByGenre, searchMovie, getDetailReview, }
+    getPopularMoviesByGenre, searchMovie, getDetailReview, removeMovieDetail}
 }, {persist: true})

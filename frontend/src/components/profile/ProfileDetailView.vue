@@ -1,6 +1,11 @@
 <template>
-    <div class="container mt-5" v-if="user">
-      <div class="row">
+  <div class="container mt-5">
+    <div v-if="loading" class="loading-text d-flex justify-content-center">
+      <h3>로딩 중...</h3>
+      <img :src="loadingImg" class="loading" style="width:50px;">
+    </div>
+    <div v-else>
+      <div class="row" v-if="profileStore.userName">
         <div class="col-md-6">
           <img :src="selectedImage" @click="showModal = true" alt="Selected" class="img-fluid" style="cursor: pointer;">
           <div v-if="showModal" @click.self="showModal = false" class="modal-backdrop">
@@ -16,9 +21,14 @@
           <div class="mb-3">
             <h2>{{ profileStore.userName }}</h2>
             <h4>{{ profileStore.nickName }}</h4>
-            <div v-if="user_id == userId" class="mt-3">
-              <input type="text" v-model="newNickName" class="form-control mb-2">
-              <button @click="changeNickname(userId)" class="btn btn-primary">닉네임 변경</button>
+            <div v-if="user_id == user_ids" class="mt-3">
+              <div v-if="editNickname">
+                <input type="text" v-model="newNickName" class="form-control mb-2" @keyup.enter="changeNickname(user_ids)">
+                <button @click="changeNickname(user_ids)" class="btn btn-primary">닉네임 변경</button>
+              </div>
+              <div v-else>
+                <button @click="editNickname = true" class="btn btn-primary">닉네임 변경하기</button>
+              </div>
             </div>
             <div v-else>
               <button @click="following(user_id)" class="btn" :class="{'btn-secondary': profileStore.isFollowing, 'btn-primary': !profileStore.isFollowing}">
@@ -54,148 +64,174 @@
         <component :is="selectedComponent"></component>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  
-  import ProfileLikeMovie from './ProfileLikeMovie.vue'
-  import ProfilePost from './ProfilePost.vue'
-  import ProfileReview from './ProfileReview.vue'
-  
-  import axios from 'axios'
-  import { ref, watch } from 'vue'
-  import { useProfileStore } from '@/stores/profileStore'
-  import { useUserStore } from '@/stores/userStore'
-  import noimage from '@/assets/static/noimage.png'
-  import image1 from '@/assets/static/cinnamoroll.png'
-  import image2 from '@/assets/static/kitty.png'
-  import image3 from '@/assets/static/kuromi.png'
-  import image4 from '@/assets/static/mymelody.png'
-  import image5 from '@/assets/static/pompompurin.png'
-  
-  defineProps({
-      user_id: String,
-      user: Object,
-  })
-  
-  const selectedComponent = ref(ProfileLikeMovie)
-  
-  const images = [noimage, image1, image2, image3, image4, image5]
-  
-  const profileStore = useProfileStore()
-  const userStore = useUserStore()
-  const userId = userStore.userId
-  
-  const following = (user_id) => {
-      profileStore.userFollowing(user_id)
-  }
-  
-  const newNickName = ref(null)
-  const changeNickname = (user_id) => {
-      profileStore.changeNickname(user_id, newNickName.value)
-      newNickName.value = null
-  }
-  
-  const selectedImage = ref(images[0])
-  const showModal = ref(false)
-  
-  function selectImage(index, user_id) {
-    if (userId == user_id) {
-        selectedImage.value = images[index]
-        showModal.value = false
-        updateUserImage(index)
-    } else {
-      alert("자신의 프로필 이미지만 변경할 수 있습니다.")
-      showModal.value = false
-    }
-  }
-  
-  function updateUserImage(imageIndex) {
-      axios({
-          method: 'PUT',
-          url: `${profileStore.LOCAL_URL}/profile/${userStore.userId}/`,
-          headers: {
-              'Authorization': `Token ${userStore.token}`
-          },
-          data: {
-              user_image: imageIndex
-          }
-      })
-      .then(res => {
-          console.log('이미지 업데이트 성공:', res.data)
-      })
-      .catch(err => {
-          console.error('이미지 업데이트 실패:', err)
-      })
-  }
-  
-  watch(() => profileStore.userImage, (newValue) => {
-      selectedImage.value = images[newValue] || noimage
-  })
-  
-  if (profileStore.userImage !== null) {
-      selectedImage.value = images[profileStore.userImage] || noimage
+  </div>
+</template>
+
+<script setup>
+import ProfileLikeMovie from './ProfileLikeMovie.vue'
+import ProfilePost from './ProfilePost.vue'
+import ProfileReview from './ProfileReview.vue'
+
+import axios from 'axios'
+import { ref, watch, onMounted } from 'vue'
+import { useProfileStore } from '@/stores/profileStore'
+import { useUserStore } from '@/stores/userStore'
+import { useRoute } from 'vue-router'
+import noimage from '@/assets/static/noimage.png'
+import image1 from '@/assets/static/cinnamoroll.png'
+import image2 from '@/assets/static/kitty.png'
+import image3 from '@/assets/static/kuromi.png'
+import image4 from '@/assets/static/mymelody.png'
+import image5 from '@/assets/static/pompompurin.png'
+import loadingImg from '@/assets/static/loading.gif'
+
+const props = defineProps({
+  user_id: String,
+  user: Object,
+})
+
+const route = useRoute()
+const user_ids = ref(route.params.id)
+
+const selectedComponent = ref(ProfileLikeMovie)
+
+const images = [noimage, image1, image2, image3, image4, image5]
+
+const profileStore = useProfileStore()
+const userStore = useUserStore()
+const userId = userStore.userId
+const loading = ref(true)
+
+const following = (user_id) => {
+  profileStore.userFollowing(user_id)
+}
+
+const newNickName = ref(null)
+const editNickname = ref(false)
+const changeNickname = (user_id) => {
+  profileStore.changeNickname(user_id, newNickName.value)
+  alert('변경되었습니다.')
+  newNickName.value = null
+  editNickname.value = false
+}
+
+const selectedImage = ref(images[0])
+const showModal = ref(false)
+
+function selectImage(index, user_id) {
+  if (userStore.userInfo.id == user_id) {
+    selectedImage.value = images[index]
+    showModal.value = false
+    userStore.updateImage(index)
+    updateUserImage(index)
   } else {
-      selectedImage.value = noimage
+    alert("자신의 프로필 이미지만 변경할 수 있습니다.")
+    showModal.value = false
   }
-  </script>
-  
-  <style scoped>
-  body {
-    background-color: #2C2C2C;
-    color: #ffffff;
+}
+
+function updateUserImage(imageIndex) {
+  axios({
+    method: 'PUT',
+    url: `${profileStore.LOCAL_URL}/profile/${userStore.userInfo.id}/`,
+    headers: {
+      'Authorization': `Token ${userStore.token}`
+    },
+    data: {
+      user_image: imageIndex
+    }
+  })
+  .then(res => {
+    console.log('이미지 업데이트 성공:', res.data)
+  })
+  .catch(err => {
+    console.error('이미지 업데이트 실패:', err)
+  })
+}
+
+watch(() => profileStore.userImage, (newValue) => {
+  selectedImage.value = images[newValue] || noimage
+})
+
+if (profileStore.userImage !== null) {
+  selectedImage.value = images[profileStore.userImage] || noimage
+} else {
+  selectedImage.value = noimage
+}
+
+watch(() => route.params.id, (newValue) => {
+  if (newValue) {
+    profileStore.removeProfile()
+    loading.value = true
+    profileStore.getProfile(newValue).then(() => {
+      loading.value = false
+    })
   }
-  
-  h2, h4, span {
-    color: #ffffff;
-  }
-  
-  .btn-primary {
-    background-color: #CCB15F;
-    border-color: #CCB15F;
-  }
-  
-  .btn-primary:hover {
-    background-color: #B89D50;
-    border-color: #B89D50;
-  }
-  
-  .btn-secondary {
-    background-color: #ffffff;
-    color: #2C2C2C;
-    border-color: #ffffff;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #e0e0e0;
-    border-color: #e0e0e0;
-  }
-  
-  .cursor-pointer {
-    cursor: pointer;
-  }
-  
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .image-list img {
-    cursor: pointer;
-    margin: 5px;
-    max-width: 100px;
-  }
-  </style>
+})
+onMounted(async () => {
+  loading.value = true
+  profileStore.removeProfile()
+  await profileStore.getProfile(user_ids)
+  loading.value = false
+})
+</script>
+
+<style scoped>
+body {
+  background-color: #2C2C2C;
+  color: #ffffff;
+}
+
+h2, h4, span {
+  color: #ffffff;
+}
+
+.btn-primary {
+  background-color: #CCB15F;
+  border-color: #CCB15F;
+}
+
+.btn-primary:hover {
+  background-color: #B89D50;
+  border-color: #B89D50;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #2C2C2C;
+  border-color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: #e0e0e0;
+  border-color: #e0e0e0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.image-list img {
+  cursor: pointer;
+  margin: 5px;
+  max-width: 100px;
+}
+</style>

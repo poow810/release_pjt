@@ -87,18 +87,18 @@ watch(() => userStore.userId, async (newId) => {
             <button class="btn btn-outline-success other text-white" id="basic-addon1" @click="searchMovie">Search</button>
           </div>
           <li class="nav-item">
-            <RouterLink v-if="!userStore.isLogIn" class= "nav-link text-white" :to="{ name: 'signup' }">회원가입</RouterLink>
+            <RouterLink v-if="!userStore.userInfo" class= "nav-link text-white" :to="{ name: 'signup' }">회원가입</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink v-if="!userStore.isLogIn" class="nav-link text-white" :to="{ name: 'login' }">로그인</RouterLink>
+            <RouterLink v-if="!userStore.userInfo" class="nav-link text-white" :to="{ name: 'login' }">로그인</RouterLink>
           </li>
           <li>
-            <RouterLink v-if="userStore.isLogIn" class="nav-link text-white" :to="{ name: 'profile', params: {'id': id}}">
-              <img :src="images[profileStore.userImage]" alt="" style="width: 50px; height: 50px;">
+            <RouterLink v-if="userStore.userInfo" class="nav-link text-white" :to="{ name: 'profile', params: {'id': userStore.userInfo.id}}">
+              <img :src="images[userStore.userInfo.user_image]" alt="" style="width: 50px; height: 50px;">
             </RouterLink>
           </li>
           <li>
-              <button v-if="userStore.isLogIn" class="btn btn-outline-success other text-white" @click="logOut">로그아웃</button>
+              <button v-if="userStore.userInfo" class="btn btn-outline-success other text-white" @click="logOut">로그아웃</button>
           </li>
         </ul>
       </div>

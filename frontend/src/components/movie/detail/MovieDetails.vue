@@ -1,4 +1,8 @@
 <template>
+  <div v-if="loading" class="loading-text">
+    <h3>로딩 중...</h3>
+    <img :src="loadingImg" class="loading" style="width:50px;">
+  </div>
   <div v-if="Object.keys(movieStore.detailMovies).length" class="movie-detail-container container mt-5">
     <div class="text-center">
       <h1 class="movie-title">{{ movieStore.detailMovies.title }}</h1>
@@ -42,14 +46,16 @@ import { ref, onMounted } from 'vue';
 import { useMovieStore } from '@/stores/movieStore';
 import { useUserStore } from '@/stores/userStore';
 import MovieReview from '@/components/movie/detail/MovieReview.vue';
+import loadingImg from '@/assets/static/loading.gif'
 
 const { movieId } = defineProps({
   movieId: String,
 });
 
-const movieStore = useMovieStore();
-const userStore = useUserStore();
-const isLiked = ref(false);
+const movieStore = useMovieStore()
+const userStore = useUserStore()
+const isLiked = ref(false)
+const loading = ref(true)
 
 const toggleLike = async () => {
   const likeData = await movieStore.movieLike(movieId);
@@ -61,7 +67,10 @@ const toggleLike = async () => {
 
 onMounted(async () => {
   console.log('영화 상세 정보 로드 시작');
+  movieStore.removeMovieDetail()
+  loading.value = true
   await movieStore.movieDetail(movieId);
+  loading.value = false;
   console.log('영화 상세 정보 로드 완료');
   isLiked.value = movieStore.detailMovies.is_liked;
 });

@@ -124,3 +124,8 @@ class FindUserNameSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username',)
 
+class CustomUserDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'nickname', 'user_image') 

@@ -227,7 +227,19 @@ export const useArticleStore = defineStore('articleStore', () => {
     }
   }
 
+  const removeArticle = () => {
+    articles.value = []
+    detailPosts.value = []
+    detailPostId.value = null
+    detailNickName.value = null
+    detailUserId.value = null
+    commentUserId.value = null
+    commentNickName.value = null
+    commentContent.value = null
+    comments.value = []
+  }
+
   return  {SERVER_URL, LOCAL_URL, articles, isLiked, likeCount, store, comments, detailPosts,
     detailPostId, detailNickName, detailUserId, commentUserId, commentNickName, commentContent, updateComment, deleteComment, 
-    fetchComments, getDetailPost, getArticles, createArticle, favoriteArticle, createComment, updatePost, deletePost}
+    fetchComments, getDetailPost, getArticles, createArticle, favoriteArticle, createComment, updatePost, deletePost, removeArticle}
 }, {persist: true})

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid p-0">
     <div class="ratio ratio-16x9">
-      <iframe class="embed-responsive-item" 
+      <iframe v-if="videoId" class="embed-responsive-item" 
         :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&fit=cover`" frameborder="0"
         allowfullscreen>
       </iframe>
