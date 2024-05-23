@@ -72,7 +72,7 @@ async function recommendMovie(weatherData) {
   try {
     const response = await axios({
       method: 'GET',
-      url: `http://192.168.85.248:8000/movie/recommend/?weather=${weatherValue}`,
+      url: `https://pkpk.o-r.kr/movie/recommend/?weather=${weatherValue}`,
       headers: {
         Authorization: `Token ${store.token}`
       }

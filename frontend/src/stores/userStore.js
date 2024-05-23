@@ -6,7 +6,7 @@ import axios from 'axios'
 export const useUserStore = defineStore('userStore', () => {
   const token = ref(null)
   const router = useRouter()
-  const SERVER_URL = 'http://43.202.204.222'
+  const SERVER_URL = 'https://pkpk.o-r.kr/'
   const LOCAL_URL = 'http://192.168.85.248:8000'
   const userId = ref(null)
   const userInfo = ref(null)

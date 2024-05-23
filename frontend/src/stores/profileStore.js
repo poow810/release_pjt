@@ -7,7 +7,7 @@ import axios from 'axios'
 export const useProfileStore = defineStore('profileStore', () => {
     const store = useUserStore()
     const router = useRouter()
-    const SERVER_URL = 'http://43.202.204.222'
+    const SERVER_URL = 'https://pkpk.o-r.kr/'
     const LOCAL_URL = 'http://192.168.85.248:8000'
     const followers_count = ref(null)
     const followings_count = ref(null)

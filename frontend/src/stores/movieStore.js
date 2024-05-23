@@ -9,7 +9,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   const token =  store.token
   const router = useRouter()
   const LOCAL_URL = 'http://192.168.85.248:8000'
-  const SERVER_URL = 'http://192.168.0.13:8000'
+  const SERVER_URL = 'https://pkpk.o-r.kr/'
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
@@ -213,7 +213,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   
   const getDetailReview = async (reviewId) => {
     try {
-      const response = await axios.get(`${LOCAL_URL}/movie/review/detail/${reviewId}/`, {
+      const response = await axios.get(`${SERVER_URL}/movie/review/detail/${reviewId}/`, {
       headers: {
         Authorization: `Token ${store.token}`
       }
