@@ -189,6 +189,9 @@ export const useMovieStore = defineStore('movieStore', () => {
     if (type == '') {
       alert('카테고리를 선택해주세요.')
       return
+    } else if (text == '') {
+      alert('검색어를 입력해주세요.')
+      return
     }
     try {
       const response = await axios({

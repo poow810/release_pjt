@@ -1,5 +1,5 @@
 <template>
-    <div @click="goDetail(searchMovie.id)" class="card-content">
+    <div @click="goDetail(searchMovie.movie_id)" class="card-content">
         <img :src="posterUrl" alt="poster" class="poster-image">
         <p class="fs-2 mt-2">{{ searchMovie.title }}</p>
         <p class="text-white">{{ searchMovie.overview }}</p>
@@ -16,6 +16,7 @@ const props = defineProps({
 });
 
 const goDetail = (movie_id) => {
+    console.log(movie_id)
     router.push({name: 'movieDetail', params: {id: movie_id}})
 }
 

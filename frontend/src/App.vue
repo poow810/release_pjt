@@ -35,7 +35,7 @@ const logOut = function () {
 
 onMounted( async() => {
   if (userStore.isLogIn) {
-    await profileStore.getProfile(userStore.userId)
+    await profileStore.getProfile(userStore.userInfo.id)
   }
   console.log(userStore.isLogIn)
 })

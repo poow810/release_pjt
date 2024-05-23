@@ -23,7 +23,6 @@
             loop
         >
             <swiper-slide v-for="searchMovie in movieStore.searchMovies" :key="searchMovie.id">
-                <p>{{ searchMovie }}</p>
                 <MovieSearchList :searchMovie="searchMovie" class="card-custom" />
             </swiper-slide>
         </swiper>
@@ -31,14 +30,18 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useMovieStore } from '@/stores/movieStore';
 import MovieSearchList from '@/components/movie/MovieSearchList.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 
 const movieStore = useMovieStore();
-</script>
 
+onMounted(() => {
+    console.log(movieStore.searchMovies)
+})
+</script>
 <style scoped>
 /* 원하는 추가 스타일을 여기에 추가할 수 있습니다 */
 .swiper {
