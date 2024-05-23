@@ -4,14 +4,16 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 export const useUserStore = defineStore('userStore', () => {
+  // token 상태 유지
   const token = ref(null)
   const router = useRouter()
   const SERVER_URL = 'https://pkpk.o-r.kr/'
   const LOCAL_URL = 'http://192.168.85.248:8000'
-  const userId = ref(null)
+  // userId 상태 제거
   const userInfo = ref(null)
 
-  const isLogIn = computed(() => token.value !== null)
+  // userInfo가 null이 아닌 경우 로그인한 것으로 간주
+  const isLogIn = computed(() => userInfo.value !== null)
 
   const logIn = async (payload) => {
     const { username, password } = payload
@@ -33,7 +35,7 @@ export const useUserStore = defineStore('userStore', () => {
       const res = await axios.get(`${LOCAL_URL}/accounts/user/`, {
         headers: { 'Authorization': `Token ${token}` }
       })
-      userId.value = res.data.pk
+      // userId 제거하고 userInfo만 업데이트
       userInfo.value = res.data
     } catch (err) {
       console.log(err)
@@ -79,5 +81,5 @@ export const useUserStore = defineStore('userStore', () => {
     userInfo.value.user_image = index
   }
 
-  return { userId, token, SERVER_URL, LOCAL_URL, isLogIn, userInfo, signUp, logIn, logOut, checkUser, updateImage }
+  return { token, SERVER_URL, LOCAL_URL, isLogIn, userInfo, signUp, logIn, logOut, checkUser, updateImage }
 }, { persist: true })

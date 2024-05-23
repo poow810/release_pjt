@@ -20,7 +20,7 @@ const movieStore = useMovieStore()
 const searchText = ref('')
 const selectType = ref('')
 
-const id = computed(() => userStore.userId)
+const id = computed(() => userStore.userInfo)
 
 const searchMovie = () => {
   movieStore.searchMovie(selectType.value, searchText.value)
@@ -38,11 +38,11 @@ onMounted(async () => {
   console.log(userStore.isLogIn)
 })
 
-watch(() => userStore.userId, async (newId) => {
+watch(() => userStore.userInfo, async (newId) => {
   if (newId && userStore.isLogIn) {
     await profileStore.getProfile(newId)
   }
-})
+}, {deep:true})
 </script>
 
 <template>

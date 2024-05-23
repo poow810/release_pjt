@@ -21,7 +21,7 @@
           <div class="mb-3">
             <h2>{{ profileStore.userName }}</h2>
             <h4>{{ profileStore.nickName }}</h4>
-            <div v-if="user_id == user_ids" class="mt-3">
+            <div v-if="userId == user_ids" class="mt-3">
               <div v-if="editNickname">
                 <input type="text" v-model="newNickName" class="form-control mb-2" @keyup.enter="changeNickname(user_ids)">
                 <button @click="changeNickname(user_ids)" class="btn btn-primary">닉네임 변경</button>
@@ -100,7 +100,7 @@ const images = [noimage, image1, image2, image3, image4, image5]
 
 const profileStore = useProfileStore()
 const userStore = useUserStore()
-const userId = userStore.userId
+const userId = userStore.userInfo.id
 const loading = ref(true)
 
 const following = (user_id) => {
